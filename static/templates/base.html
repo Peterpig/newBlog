@@ -4,7 +4,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{{detals.title}}</title>
+    <meta name="description" content="{{detals.description}}" />
+    <meta name="keywords" content="{{detals.keywords}}">
+    <link rel='next' href='{{detals.url}}/about/' />
+    <link rel="canonical" href="{{detals.url}}" />
+    <meta property="og:title" content="{{detals.name}} - {{detals.url}}" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="{{detals.url}}" />
+    <!--百度统计代码-->
+      <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?{{detals.tongji}}";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
     {% block meta %}{% endblock %}
     <!-- Bootstrap core CSS -->
     <link rel="shortcut icon" href="/site_media/img/favicon.ico">
@@ -38,8 +57,10 @@
             </div>
              <!--右侧-->
             <div class="col-md-3">
+                <!--个人信息展示框-->
                 {% include 'common/userinfo.html' %}
                 <div id="sideinfo"></div>
+                <!--评论框-->
                 {% include 'common/comment.html' %}
                 {% block side %}{% endblock %}
             </div>
@@ -72,7 +93,8 @@
 	    $('.actGotop').click(function(){
 	    $('html,body').animate({scrollTop: '0px'}, 800);});
         // 异步加载侧栏
-       {% if not is_blog_view %} getSideinfo();{% endif %}
+        //如果不是博客详情页面，则加载侧栏
+       {% if not is_blog_view %}getSideinfo();{% endif %}
 	});
     function getSideinfo(){
         var url='/blog/common/'

@@ -155,19 +155,17 @@ def get_neighbour(id):
     dic = {}
     blog_list = list(blog_list)
     if blog_list:
-        id_index = blog_list.index(id)  # 获得索引
-        pre, next = 0,0
+        id_index = blog_list.index(id)  # 当前id的索引
+        pre, next = 0, 0
 
         if len(blog_list) > 1:
-            if id_index != 0 and in_index != len(blog_list)-1:  # 不是第一篇和最后一篇
+            if id_index != 0 and id_index != len(blog_list)-1:      # 如果不是第一篇或最后一篇
                 pre = blog_list[id_index-1]
                 next = blog_list[id_index+1]
             else:
-                if id_index == 0:
-                    # 第一篇
+                if id_index == 0:       # 第一篇
                     next = blog_list[id_index+1]
-                if id_index == len(blog_list)-1:
-                    # 最后一篇
+                if id_index == len(blog_list)-1:    # 最后一篇
                     pre = blog_list[id_index-1]
         elif len(blog_list) == 1:
             pre, next = 0, 0

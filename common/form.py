@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-#from mysite.models import Type, Blog, Wiki, PicType, MyPic, Words
+from mysite.models import Type, Blog#, Wiki, PicType, MyPic, Words
 
 from wmd.widgets import MarkDownInput   # 从wmd编辑器导入html组件
 
@@ -89,3 +89,76 @@ class LoginForm(forms.Form):
             is_first = True
             self.user_cache.save()
         return is_first
+
+
+class BlogForm(ModelForm):
+    """
+    ---------------------------------------
+    功能说明：博客发布
+    ---------------------------------------
+    时间:     2015－04－10
+    ---------------------------------------
+    """    
+    title = forms.CharField(max_length=100, label=u'标题', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'标题', 'required': ''}
+        )
+    )
+    type = forms.IntegerField()
+    is_show = forms.CharField(required=False, max_length=100, label=u'加密', widget=forms.TextInput(
+        attrs={'calss': 'form-control', 'placeholder': u'密码'}
+        )
+    )
+    content = forms.CharField(label=u'内容', widget=MarkDownInput(
+        attrs={'class': 'form-control', 'placeholder': u'内容', 'required': 'True'}
+        )
+    )
+
+    class Meta:
+        model = Blog
+        fields = ('title', 'type', 'content', 'is_show')
+
+class PasswordForm(forms.Form):
+    """
+    ---------------------------------------
+    功能说明：修改密码表单
+    ---------------------------------------
+    时间:     2015－04－17
+    ---------------------------------------
+    """  
+    oldpwd = forms.CharField(label=u'原始密码', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': u'原始密码', 'required':''}
+        )
+    )
+    password1 = forms.CharField(label=u'新密码', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': u'密码长度在5-12位', 'required':''}
+        )
+    )
+    password2 = forms.CharField(label=u'再输入一次', widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': u'再输入一次', 'required':''}
+        )
+    )
+
+    def __init__(self, user=None, *args, **kwargs):
+        self.user = user
+        self.newpwd = None
+        super(PassWordForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(PassWordForm, self).clean()
+        oldpwd = cleaned_data.get("oldpwd")
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+
+        if not self.user.check_password(oldpwd):
+            msg = u"原密码错误"
+            self._errors["oldpwd"] = self.error_class([msg])
+
+        if password1 and password2:
+            if password1 != password2:
+                msg = u'两次密码输入不相同'
+                self._errors['password2'] = self.error_class([msg])
+            if not 4 < len(password) < 13:
+                msg = u'密码要在5-12位之间'
+                self._errors['password1'] = self.error_class([mag])
+        return cleaned_data
+        
