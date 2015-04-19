@@ -5,6 +5,7 @@ from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 import markdown
 
+
 class Type(models.Model):
     """
     分类
@@ -22,6 +23,7 @@ class Type(models.Model):
 
     class Meta:
         db_table = 'type'
+
 
 class Blog(models.Model):
     """
@@ -55,6 +57,7 @@ class Blog(models.Model):
         """
         return BlogTag.objects.filter(blog=self.id)
 
+
 class Tag(models.Model):
     """
     个人标签
@@ -67,6 +70,7 @@ class Tag(models.Model):
 
     class Meta:
         db_table = 'tags'
+
 
 class BlogTag(models.Model):
     """
@@ -81,3 +85,25 @@ class BlogTag(models.Model):
 
     class Meta:
         db_table = 'blog_tag'
+
+
+class BlogDetal(models.Model):
+    """
+    ---------------------------------------
+    功能说明：博客标题、描述、关键字设置，用于SEO和改变博客名称
+    ---------------------------------------
+    时间:     2015－04－17
+    ---------------------------------------
+    """
+    blog_name = models.CharField(max_length=50)
+    blog_title = models.CharField(max_length=50)
+    blog_description = models.CharField(max_length=100)
+    blog_keywords = models.CharField(max_length=300)
+    blog_url = models.CharField(max_length=50)
+    blog_tongji = models.CharField(max_length=500)
+
+    def __unicode__(self):
+        return self.blog_title
+
+    class Meta:
+        db_table = 'blogdetal'
