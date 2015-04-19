@@ -212,12 +212,38 @@ def blogType(request, id):
     context['blogs'] = Blog.objects.filter(type=id).order_by('-id')
     return render(request, 'blog_type.html', context)
 
+
+def blogTag(request, id):
+    """
+    ---------------------------------------
+    功能说明：获取指定id的博客标签
+    ---------------------------------------
+    时间:     2015－04－19
+    -----
+    """
+    context = {}
+    context['tag_name'] = Tag.objects.get(pk=id).name
+    context['blogs'] = BlogTag.objects.filter(tag__id=id).order_by('-id')
+    return render(request, 'blog_tag.html', context)
+
+
+def pic(request):
+    """
+    ---------------------------------------
+    功能说明：获取博客导图
+    ---------------------------------------
+    时间:     2015－04－19
+    -----
+    """
+    context = {}
+    context['pics'] = PicType.objects.order_by('-id')
+
 def get_blog_detals():
     """
     ---------------------------------------
     功能说明：获得网站标题、描述、关键字等
     ---------------------------------------
-    时间:     2015－04－17
+    时间:     2015－04－19
     ---------------------------------------
     """
     dic = {}

@@ -107,3 +107,47 @@ class BlogDetal(models.Model):
 
     class Meta:
         db_table = 'blogdetal'
+
+class PicType(models.Model):
+    """
+    ---------------------------------------
+    功能说明：博客缩略图
+    ---------------------------------------
+    时间:     2015－04－19
+    ---------------------------------------
+    """
+    title = models.CharField(max_length=100)
+    desc = models.CharField(max_length=500, null=True)
+    add_date = models.DateTimeField(auto_now=True)
+    img = models.IntegerField(null=True)
+
+    def getPicCount(self):
+        return MyPic.objects.filter(type=self.id).count()
+
+    def getPic(self):
+        return Pic.objects.get(pk=self.img)
+    class Meta:
+        db_table = 'pic_type'
+
+
+class MyPic(models.Model):
+    """
+    ---------------------------------------
+    功能说明：Mypic
+    ---------------------------------------
+    时间:    2015－04－19
+    ---------------------------------------
+    """    
+    type = models.IntegerField()
+    img = models.IntegerField(null=True)
+    desc = models.CharField(max_length=500, null=True)
+    add_date = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    def getType(self):
+        return PicType.objects.get(pk=self.type)
+
+    def getPic(self):
+        return Pic.objects.get(pk=self.img)
+
+    class Meta:
+        db_table = 'mypic'
