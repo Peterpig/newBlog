@@ -108,6 +108,24 @@ class BlogDetal(models.Model):
     class Meta:
         db_table = 'blogdetal'
 
+
+class Pic(models.Model):
+    pass
+    """
+    ---------------------------------------
+    功能说明：博客图片
+    ---------------------------------------
+    时间:     2015－04－20
+    ---------------------------------------
+    """    
+    img = models.CharField(max_length=200)
+    key = models.CharField(max_length=200)  # 七牛key
+    add_time = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'pic'
+
+
 class PicType(models.Model):
     """
     ---------------------------------------
@@ -119,7 +137,7 @@ class PicType(models.Model):
     title = models.CharField(max_length=100)
     desc = models.CharField(max_length=500, null=True)
     add_date = models.DateTimeField(auto_now=True)
-    img = models.IntegerField(null=True)
+    img = models.IntegerField(null=True)    # 图片id
 
     def getPicCount(self):
         return MyPic.objects.filter(type=self.id).count()
@@ -151,3 +169,24 @@ class MyPic(models.Model):
 
     class Meta:
         db_table = 'mypic'
+
+
+class Word(models.Model):
+    status = models.IntegerField(default=0) # 0:None; 1:Ok
+    add_date = models.DateField(auto_now=True)
+
+    class Meta:
+        db_table = 'word'
+
+
+class Words(models.Model):
+    word = models.ForeignKey(Word)
+    english = models.CharField(max_length=100)              # 0:None; 1:Ok
+    explain = models.CharField(max_length=300, null=True)
+    phonetic = models.CharField(max_length=100, null=True)   #  英标
+    seq = models.CharField(max_length=300, null=True)
+    add_time = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(default=0)   # ok
+
+    class Meta:
+        db_table = 'words'

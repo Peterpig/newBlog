@@ -202,7 +202,7 @@ def tagsCloud():
 def blogType(request, id):
     """
     ---------------------------------------
-    功能说明：获取指定id的博客类型
+    功能说明：获取指定分类的博客
     ---------------------------------------
     时间:     2015－04－10
     ---------------------------------------
@@ -216,7 +216,7 @@ def blogType(request, id):
 def blogTag(request, id):
     """
     ---------------------------------------
-    功能说明：获取指定id的博客标签
+    功能说明：博客标签检索
     ---------------------------------------
     时间:     2015－04－19
     -----
@@ -237,6 +237,7 @@ def pic(request):
     """
     context = {}
     context['pics'] = PicType.objects.order_by('-id')
+
 
 def get_blog_detals():
     """
@@ -273,3 +274,38 @@ def cus_500_err(request):
 
 def cus_404_err(request):
     return render(request, 'common/404.html')
+
+def commonDel(request):
+    """
+    ---------------------------------------
+    功能说明：删除文章
+    ---------------------------------------
+    时间:     2015－04－20
+    ---------------------------------------
+    """   
+    if request.method == "POST":
+        str_model = request.POST.get('model')
+        id = request.POST.get('id')
+        obj_content = ContentType.objects.get(model=str_model)
+        if str_model == 'pictype':          # delete pic
+            img = []
+            img += MyPic.objects.filter(type=id).values_list('img', flat=True)
+            img.append(PicType.objects.get(pk=id).img)
+            keys = Pic.objects.filter(id__in=img).values_list('key', flat=True)
+            # delete remote file
+            qn = SuperQiniu(keys)
+            qn.delMoreFiles()
+            # delete models
+            MyPic.objects.filter(type=id).delete()
+        if str_model == 'pic':
+            MyPic.objects.filter(img=id).delete()
+            PicType.objects.filter(img=id).delete()
+            picture = Pic.objects.get(pk=id)
+            qn = SuperQiniu(picture.key)
+            qn.delFile()        # 删除远程图片
+        """
+        if str_model == 'wikitype':         # delete wiki
+            Wiki.objects.filter(category=id).delete()
+        """
+        obj = obj_content.get_object_for_this_type(pk=id).delete()
+        return HttpResponse('ok')

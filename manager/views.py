@@ -31,14 +31,13 @@ def manage(request):
 
 
 def addBlog(request):
-
     """
     ---------------------------------------
-    功能说明：博客添加
+    功能说明：添加博客
     ---------------------------------------
-    时间:     2015－04－17
+    时间:     2015－04－10
     ---------------------------------------
-    """
+    """ 
     context = {}
     now = datetime.datetime.now()
     user = request.user
@@ -112,3 +111,19 @@ def addBlog(request):
         context['tags'] = tags
         context['is_edit'] = is_edit
     return render(request, 'manager/addtheme.html', context)
+
+
+def addType(request):
+    """
+    ---------------------------------------
+    功能说明：添加分类
+    ---------------------------------------
+    时间:    2015－04－20
+    ---------------------------------------
+    """ 
+    user = request.user
+    if request.method == 'POST':
+        name = request.POST.get('name').strip().lower()
+        if not Type.objects.filter(name__iexact=name).exists():
+            c_id = Type.objects.create(name=name).id
+            return ajax.ajax_ok(c_id)
