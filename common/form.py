@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from mysite.models import Type, Blog#, Wiki, PicType, MyPic, Words
+from mysite.models import Type, Blog, Wiki#, PicType, MyPic, Words
 
 from wmd.widgets import MarkDownInput   # 从wmd编辑器导入html组件
 
@@ -162,3 +162,20 @@ class PasswordForm(forms.Form):
                 self._errors['password1'] = self.error_class([mag])
         return cleaned_data
         
+
+
+class WikiForm(ModelForm):
+    """
+    ---------------------------------------
+    功能说明：Wiki分类表单
+    ---------------------------------------
+    时间:     2015－04－19
+    ---------------------------------------
+    """  
+    content = forms.CharField(label=u'wiki', widget=MarkDownInput(
+        attrs={'class': 'form-control', 'placeholder': u'wiki', 'required': ''})
+    )
+
+    class Meta:
+        model = Wiki
+        fields = ('content',)

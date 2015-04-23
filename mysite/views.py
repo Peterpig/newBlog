@@ -10,7 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-from common.form import LoginForm  # , WikiForm
+from common.form import LoginForm, WikiForm
 
 from mysite.models import *
 #from common.superqiniu import SuperQiniu
@@ -309,3 +309,80 @@ def commonDel(request):
         """
         obj = obj_content.get_object_for_this_type(pk=id).delete()
         return HttpResponse('ok')
+
+
+def wiki(request, id=None):
+    """
+    ---------------------------------------
+    功能说明：wiki百科
+    ---------------------------------------
+    时间:     2015－04－21
+    ---------------------------------------
+    """
+    context = {}
+    context['wikiType'] = WikiType.objects.order_by('-id')
+    if context['wikiType']:
+        if not id:
+            id = context['wikiType'][0].id
+        context['id'] = id
+        context['wiki'] = Wiki.objects.filter(category=id).order_by('-id')
+    return render(request, 'wiki/wiki.html', context)
+
+
+def wiki_add_type(request):
+    """
+    ---------------------------------------
+    功能说明：添加wiki分类
+    ---------------------------------------
+    时间:     2015－04－20
+    ---------------------------------------
+    """   
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        id = int(request.POST.get('id', 0))
+        name = name.strip()
+        if id:
+            WikiType.objects.filter(pk=id).update(name=name)
+            return HttpResponse('ok')
+
+        if name and not WikiType.objects.filter(name__icontains=name):
+            WikiType.objects.create(name=name)
+            return HttpResponse('ok')
+        else:
+            return HttpResponse(0)
+
+
+def wiki_add(request, id=None):
+    """
+    ---------------------------------------
+    功能说明：添加wiki
+    ---------------------------------------
+    时间:     2015－04－20
+    ---------------------------------------
+    """   
+    context = {}
+    if id:
+        context['typename'] = WikiType.objects.get(pk=id)
+    if request.method == 'POST':
+        wid = int(request.POST.get('id', 0))
+        if wid:
+            wiki_ =get_object_or_404(Wiki, pk=wid)
+            form = WikiForm(request.POST, instance=wiki_)
+        else:
+            form = WikiForm(request.POST)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.category = id
+            f.save()
+            return HttpResponseRedirect('/wiki/%s/' %id)
+        context['form'] = form
+    else:
+        id = request.GET.get('id', None)
+        form = WikiForm()
+        if id:
+            wiki_ =get_object_or_404(Wiki, pk=id)
+            form = WikiForm(instance=wiki_)
+        context['form'] = form
+        context['id'] = id
+
+    return render(request, 'wiki/add.html', context)

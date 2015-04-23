@@ -190,3 +190,45 @@ class Words(models.Model):
 
     class Meta:
         db_table = 'words'
+
+class WikiType(models.Model):
+    """
+    ---------------------------------------
+    功能说明：Wiki分类数据模型
+    ---------------------------------------
+    时间:    2015－04－19
+    ---------------------------------------
+    """
+    name = models.CharField(max_length=50)
+    add_date = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.name
+
+    def getCount(self):
+        """获取数目"""
+        return Wiki.objects.filter(category=self.id).count()
+
+    class Meta:
+        db_table = 'wiki_type'
+
+
+class Wiki(models.Model):
+    """
+    ---------------------------------------
+    功能说明：Wiki数据模型
+    ---------------------------------------
+    时间:    2015－04－19
+    ---------------------------------------
+    """    
+    category = models.IntegerField()
+    content = wmd_models.MarkDownField()
+    content_show = wmd_models.MarkDownField(u'show', null=True)
+    add_time = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    class Meta:
+        db_table = 'wiki'
+
+    def save(self, force_insert=False, force_update=False, using=None):
+        self.content_show = mark_safe(markdown.markdown(force_unicode(self.content), ['codehilite'], safe_mode='escape'))
+        super(Wiki, self).save()
