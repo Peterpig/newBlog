@@ -110,7 +110,6 @@ class BlogDetal(models.Model):
 
 
 class Pic(models.Model):
-    pass
     """
     ---------------------------------------
     功能说明：博客图片
@@ -136,7 +135,7 @@ class PicType(models.Model):
     """
     title = models.CharField(max_length=100)
     desc = models.CharField(max_length=500, null=True)
-    add_date = models.DateTimeField(auto_now=True)
+    add_time = models.DateTimeField(auto_now=True)
     img = models.IntegerField(null=True)    # 图片id
 
     def getPicCount(self):

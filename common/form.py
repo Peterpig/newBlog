@@ -179,3 +179,17 @@ class WikiForm(ModelForm):
     class Meta:
         model = Wiki
         fields = ('content',)
+
+
+class PicTypeForm(ModelForm):
+    """
+    ---------------------------------------
+    功能说明：图片分类表单
+    ---------------------------------------
+    时间:     2015－04－19
+    ---------------------------------------
+    """ 
+    def __init__(self, arg):
+        super(PicType, self).__init__()
+        self.arg = arg
+        

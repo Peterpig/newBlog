@@ -15,6 +15,7 @@ from common.form import LoginForm, WikiForm
 from mysite.models import *
 #from common.superqiniu import SuperQiniu
 
+
 def home(request):
     """
     ---------------------------------------
@@ -77,7 +78,8 @@ def search(request):
     context = {}
     key = request.GET.get('search', '')
     context['key'] = key
-    context['blog'] = Blog.objects.filter(title__icontains=key).order_by('-id')     # 标题检索
+    context['blog'] = Blog.objects.filter(
+        title__icontains=key).order_by('-id')     # 标题检索
     return render(request, 'search.html', context)
 
 
@@ -106,6 +108,7 @@ def about(request):
     ---------------------------------------
     """
     return render(request, 'about.html')
+
 
 def resume(request):
     """
@@ -159,14 +162,15 @@ def get_neighbour(id):
         pre, next = 0, 0
 
         if len(blog_list) > 1:
-            if id_index != 0 and id_index != len(blog_list)-1:      # 如果不是第一篇或最后一篇
-                pre = blog_list[id_index-1]
-                next = blog_list[id_index+1]
+            # 如果不是第一篇或最后一篇
+            if id_index != 0 and id_index != len(blog_list) - 1:
+                pre = blog_list[id_index - 1]
+                next = blog_list[id_index + 1]
             else:
                 if id_index == 0:       # 第一篇
-                    next = blog_list[id_index+1]
-                if id_index == len(blog_list)-1:    # 最后一篇
-                    pre = blog_list[id_index-1]
+                    next = blog_list[id_index + 1]
+                if id_index == len(blog_list) - 1:    # 最后一篇
+                    pre = blog_list[id_index - 1]
         elif len(blog_list) == 1:
             pre, next = 0, 0
         dic = {'pre': pre, 'next': next}
@@ -189,7 +193,7 @@ def tagsCloud():
         R = random.randint(0, 254)
         G = random.randint(0, 254)
         B = random.randint(0, 254)
-        RGB = 'rgb(%s%s%s)' %(R, G, B)
+        RGB = 'rgb(%s%s%s)' % (R, G, B)
 
         dic = {}
         dic['name'] = obj.name
@@ -237,6 +241,7 @@ def pic(request):
     """
     context = {}
     context['pics'] = PicType.objects.order_by('-id')
+    return render(request, 'pic/index.html', context)
 
 
 def get_blog_detals():
@@ -248,7 +253,7 @@ def get_blog_detals():
     ---------------------------------------
     """
     dic = {}
-    detal =  BlogDetal.objects.get(pk=1) or ''
+    detal = BlogDetal.objects.get(pk=1) or ''
 
     if detal:
         dic['name'] = detal.blog_name
@@ -275,6 +280,7 @@ def cus_500_err(request):
 def cus_404_err(request):
     return render(request, 'common/404.html')
 
+
 def commonDel(request):
     """
     ---------------------------------------
@@ -282,7 +288,7 @@ def commonDel(request):
     ---------------------------------------
     时间:     2015－04－20
     ---------------------------------------
-    """   
+    """
     if request.method == "POST":
         str_model = request.POST.get('model')
         id = request.POST.get('id')
@@ -336,7 +342,7 @@ def wiki_add_type(request):
     ---------------------------------------
     时间:     2015－04－20
     ---------------------------------------
-    """   
+    """
     if request.method == 'POST':
         name = request.POST.get('name', '')
         id = int(request.POST.get('id', 0))
@@ -359,14 +365,14 @@ def wiki_add(request, id=None):
     ---------------------------------------
     时间:     2015－04－20
     ---------------------------------------
-    """   
+    """
     context = {}
     if id:
         context['typename'] = WikiType.objects.get(pk=id)
     if request.method == 'POST':
         wid = int(request.POST.get('id', 0))
         if wid:
-            wiki_ =get_object_or_404(Wiki, pk=wid)
+            wiki_ = get_object_or_404(Wiki, pk=wid)
             form = WikiForm(request.POST, instance=wiki_)
         else:
             form = WikiForm(request.POST)
@@ -374,14 +380,14 @@ def wiki_add(request, id=None):
             f = form.save(commit=False)
             f.category = id
             f.save()
-            return HttpResponseRedirect('/wiki/%s/' %id)
+            return HttpResponseRedirect('/wiki/%s/' % id)
         context['form'] = form
     else:
         id = request.GET.get('id', None)
         form = WikiForm()
         if id:
-            wiki_ =get_object_or_404(Wiki, pk=id)
-            form = WikiForm(instance=wiki_)
+            wiki_ = get_object_or_404(Wiki, pk=id)
+            form = WikiForm(instance=wiki_)     # 生成表单，同时填充内容
         context['form'] = form
         context['id'] = id
 

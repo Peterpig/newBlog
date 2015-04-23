@@ -5,7 +5,7 @@
     <link href="/site_media/wmd/wmd.css/" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="row">
+<div class="row">{{ request.path }}
         <form class="form-signin2" role="form" id="themeform" action="{{ request.path }}" method="post">
          {% csrf_token %}
             <h2 class="form-signin-heading">添加WIKI--{{ typename }}</h2>
