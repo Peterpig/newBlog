@@ -127,3 +127,18 @@ def addType(request):
         if not Type.objects.filter(name__iexact=name).exists():
             c_id = Type.objects.create(name=name).id
             return ajax.ajax_ok(c_id)
+
+
+def getPic(html):
+    """
+    ---------------------------------------
+    功能说明：获取博客导图
+    ---------------------------------------
+    时间:    2015－04－27
+    ---------------------------------------
+    """
+    soup = BeautifulSoup(html)
+    s = soup.find('img')
+    if s:
+        return s['src']
+    return '/site_media/img/blog/%s,jpg' % (random.choice(range(1, 10)))

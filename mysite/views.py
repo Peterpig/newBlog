@@ -186,6 +186,7 @@ def tagsCloud():
     ---------------------------------------
     """
     tags = Tag.objects.all()
+    print tags
     tagscloud = []
     for obj in tags:
         size = random.randint(12, 30)   # 随机字体大小
