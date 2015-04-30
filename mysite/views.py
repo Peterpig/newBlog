@@ -194,13 +194,14 @@ def tagsCloud():
         R = random.randint(0, 254)
         G = random.randint(0, 254)
         B = random.randint(0, 254)
-        RGB = 'rgb(%s%s%s)' % (R, G, B)
+        RGB = 'rgb(%s,%s,%s)' % (R, G, B)
 
         dic = {}
         dic['name'] = obj.name
         dic['id'] = obj.id
-        dic['size'] = siez
+        dic['size'] = size
         dic['rgb'] = RGB
+        tagscloud.append(dic)
     return tagscloud
 
 

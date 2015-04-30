@@ -3,8 +3,9 @@
   <div class="panel-heading">博客分类</div>
   <div class="panel-body">
     <p class="form-group has-warning" id="b_type">
+  <!--右侧：博客分类-->
         {% for obj in types %}
-            <a href="/blog/type/{{ obj.id }}/" class="label label-warning" style="margin:0 auto; margin-bottom: 5px;line-height:30px; display: block; width:200px;">{{ obj.name }}&nbsp;({{ obj.getCount }})</a>
+            <a href="/blog/type/{{ obj.id }}/" class="label label-info" style="margin:0 auto; margin-bottom: 5px;line-height:30px; display: block; width:180px;">{{ obj.name }}&nbsp;({{ obj.getCount }})</a>
         {% endfor %}
     </p>
   </div>

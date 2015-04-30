@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 
-from common.form import BlogForm,PasswordForm#, PicTypeForm, MypicForm
+from common.form import BlogForm, PasswordForm, PicTypeForm, MypicForm
 
 from mysite.models import Type, Tag, Blog, BlogTag#, PicType, Pic, MyPic
 from django.shortcuts import get_object_or_404
@@ -137,8 +137,46 @@ def getPic(html):
     时间:    2015－04－27
     ---------------------------------------
     """
+    # 获取文章中的图片，如果有：抓取图片url 。否则使用本地图片
     soup = BeautifulSoup(html)
     s = soup.find('img')
     if s:
         return s['src']
-    return '/site_media/img/blog/%s,jpg' % (random.choice(range(1, 10)))
+    return '/site_media/img/blog/%s.jpg' % (random.choice(range(1, 10)))
+
+
+def CreatePicType(request):
+    """
+    ---------------------------------------
+    功能说明：创建图片
+    ---------------------------------------
+    时间:    2015－04－30
+    ---------------------------------------
+    """
+    context = {}
+    if request.method == 'POST':
+        id = int(request.POST.get('id', 0))
+        if id:
+            pictype = get_object_or_404(PicType, pk=id)
+            form = PicTypeForm(request.POST, instance=pictype)
+        else:
+            form = PicTypeForm(request.POST)
+        if form.is_valid:
+            f = form.save(commit=False)
+            img = request.POST.get('pid')
+            f.img = img
+            f.save()
+            return HttpResponseRedirect('/pic/')
+        context['form'] = form
+    else:
+        id = request.GET.get('id', None)
+        form = PicTypeForm()
+        if id:
+            pictype =get_object_or_404(PicType, pk=id)
+            context['img_obj'] = pictype.getPic()
+            form = PicTypeForm(instance=pictype)
+        context['form'] = form
+        context['id'] = id
+
+    return render(request, 'pic/addtype.html', context)
+            

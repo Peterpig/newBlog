@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from mysite.models import Type, Blog, Wiki#, PicType, MyPic, Words
+from mysite.models import Type, Blog, Wiki, PicType, MyPic, Words
 
 from wmd.widgets import MarkDownInput   # 从wmd编辑器导入html组件
 
@@ -189,7 +189,51 @@ class PicTypeForm(ModelForm):
     时间:     2015－04－19
     ---------------------------------------
     """ 
-    def __init__(self, arg):
-        super(PicType, self).__init__()
-        self.arg = arg
-        
+    title = forms.CharField(max_length=100, label=u'title', widget=forms.TextInput(
+        attrs = {'class': 'form-control', 'placeholder': u'title', 'required': ''})
+    )
+
+    desc = forms.CharField(label=u'wiki', widget=forms.Textarea(
+        attrs = {'class': 'form-control', 'placeholder': u'describe'})
+    )
+
+    def clean(self):
+        cleaned_data = super(PicTypeForm, self).clean()
+        title = cleaned_data.get('title').strip()
+        if not title and PicType.objects.filter(title__incotains=title).exists():
+            raise forms.ValidationError(u'该分类已存在！')
+        return cleaned_data
+
+    class Meta:
+        model = PicType
+        fields = ('title', 'desc')
+
+
+class MypicForm(ModelForm):
+    """
+    ---------------------------------------
+    功能说明：图片分类表单
+    ---------------------------------------
+    时间:     2015－04－19
+    ---------------------------------------
+    """     
+    type = forms.ModelChoiceField(queryset=PicType.objects.order_by('-id'), widget=forms.RadioSelect)
+
+    desc = forms.CharField(label=u'wiki', widget=forms.Textarea(
+        attrs= {'class': 'form-control', 'placeholder': u'describe'})
+    )
+
+    class Meta:
+        model = MyPic
+        fields = ('type', 'desc')
+
+"""
+class WordsForm(ModelForm):
+    english = forms.CharField(label=u'单词', widget=forms.TextInput(
+        attrs = {'class': 'from-control', 'placeholder': u'英文'})
+    )
+
+    class Meta:
+        model = Words
+        fields = ('english')
+"""
