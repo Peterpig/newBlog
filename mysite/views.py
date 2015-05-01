@@ -342,21 +342,26 @@ def wiki_add_type(request):
     ---------------------------------------
     功能说明：添加wiki分类
     ---------------------------------------
-    时间:     2015－04－20
+    时间:     2015－04－22
     ---------------------------------------
-    """
+    """   
     if request.method == 'POST':
         name = request.POST.get('name', '')
         id = int(request.POST.get('id', 0))
         name = name.strip()
         if id:
+            # 编辑状态
             WikiType.objects.filter(pk=id).update(name=name)
             return HttpResponse('ok')
-
         if name and not WikiType.objects.filter(name__icontains=name):
             WikiType.objects.create(name=name)
             return HttpResponse('ok')
         else:
+            # 分类不存在，创建
+            WikiType.objects.create(name=name)
+            return HttpResponse('ok')
+        else:
+            # 分类存在
             return HttpResponse(0)
 
 
@@ -365,9 +370,9 @@ def wiki_add(request, id=None):
     ---------------------------------------
     功能说明：添加wiki
     ---------------------------------------
-    时间:     2015－04－20
+    时间:     2015－04－22
     ---------------------------------------
-    """
+    """  
     context = {}
     if id:
         context['typename'] = WikiType.objects.get(pk=id)
@@ -382,7 +387,7 @@ def wiki_add(request, id=None):
             f = form.save(commit=False)
             f.category = id
             f.save()
-            return HttpResponseRedirect('/wiki/%s/' % id)
+            return HttpResponseRedirect('/wiki/%s' %id)
         context['form'] = form
     else:
         id = request.GET.get('id', None)
