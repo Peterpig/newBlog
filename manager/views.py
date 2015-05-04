@@ -64,7 +64,7 @@ def addBlog(request):
             summary = ''.join(BeautifulSoup(html).findAll(text=True))
 
             if obj:     # 编辑状态
-                blog = Blog.objects.filter(id=obj).update(title=title, type=int(type), summary=summary,rss=rss, content=content, add_date=now, is_show=pwd)
+                blog = Blog.objects.filter(id=obj).update(title=title, type=int(type), summary=summary,rss=rss, content=content, content_show=html, add_date=now, is_show=pwd)
                 blog = Blog.objects.get(id=obj)
             else:
                 blog = Blog.objects.create(

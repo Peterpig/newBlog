@@ -10,7 +10,7 @@
 
 <!--blog-->
         <div class="media-body">
-          <h3 class="text-center"><span class="Tblog">{{ blog.title }}</span></h3>
+          <h1 class="text-center"><span class="Tblog">{{ blog.title }}</span></h1>
             <hr style="margin: 10px 0;" />
             <p class="small text-muted">
               BeginMan
@@ -24,7 +24,7 @@
               {% endif %}
             </p>
             <hr/>
-    {{ blog.content_show }}
+    {{ blog.content_show|safe }}
     <!--警告-->
     <hr/>
     <div class="alert">

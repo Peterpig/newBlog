@@ -132,8 +132,8 @@ def blog(request, id=None):
     context = {}
     blog = Blog.objects.get(pk=id)
     if blog.is_show:
-        # 博客未加密，跳转到详细页面GET
-        return HttpResponseRedirect('/ciphertxt/%s/' % id)
+        # 博客加密，跳转到验证界面
+        return HttpResponseRedirect('/ciphertext/%s/' % id)
     # 访问次数加一
     blog.counts += 1
     blog.save()
@@ -357,10 +357,6 @@ def wiki_add_type(request):
             WikiType.objects.create(name=name)
             return HttpResponse('ok')
         else:
-            # 分类不存在，创建
-            WikiType.objects.create(name=name)
-            return HttpResponse('ok')
-        else:
             # 分类存在
             return HttpResponse(0)
 
@@ -399,3 +395,31 @@ def wiki_add(request, id=None):
         context['id'] = id
 
     return render(request, 'wiki/add.html', context)
+
+
+def ciphertext(request, id=None):
+    """
+    ---------------------------------------
+    功能说明：带密码的博文访问
+    ---------------------------------------
+    时间:     2015－05－04
+    ---------------------------------------
+    """ 
+    print "ciphertext"
+    if id and Blog.objects.filter(id=id).exists():
+        blog = Blog.objects.get(pk=id)
+        pwd = blog.is_show
+        if request.method == 'POST':
+            # 输入的密码
+            in_pwd = request.POST.get('pwd', '')
+            if in_pwd == pwd:
+                context = {}
+                blog.counts += 1
+                blog.save()
+                context['blog'] = blog
+                context['is_blog_view'] = True
+                context['id'] = id
+                context['pn'] = get_neighbour(id)
+                return render(request, 'blog.html', context)
+        return render(request, 'common/ciphertext.html')
+    return HttpResponseRedirect('/404/')
