@@ -5,10 +5,11 @@
     <link href="/site_media/wmd/wmd.css/" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="row">{{ request.path }}
+<div class="row">
         <form class="form-signin2" role="form" id="themeform" action="{{ request.path }}" method="post">
          {% csrf_token %}
-            <h2 class="form-signin-heading">添加WIKI--{{ typename }}</h2>
+            <h2 class="form-signin-heading">添加Wiki
+            <span class="navbar-right">名称：<span class="label label-info ">{{ typename }}</span></span></h2>
 
             <div class="panel panel-default">
                   <div class="panel-heading"><b>内容：</b></div>

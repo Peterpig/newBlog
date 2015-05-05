@@ -328,6 +328,7 @@ def wiki(request, id=None):
     ---------------------------------------
     """
     context = {}
+    print "id=",id
     context['wikiType'] = WikiType.objects.order_by('-id')
     if context['wikiType']:
         if not id:
@@ -386,6 +387,7 @@ def wiki_add(request, id=None):
             return HttpResponseRedirect('/wiki/%s' %id)
         context['form'] = form
     else:
+        # GET请求
         id = request.GET.get('id', None)
         form = WikiForm()
         if id:

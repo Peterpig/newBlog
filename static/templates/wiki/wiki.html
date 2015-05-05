@@ -8,13 +8,14 @@
 <div class="col-md-3">
 {% if user.is_active %}
     <p>
-    <span class="label label-warning" style="cursor: pointer" data-toggle="modal" data-target="#addType">添加分类</span>
-    &nbsp;&nbsp;<a href="/manage/wiki/" class="label label-info">管理</a>
+    <span class="label label-info" style="cursor: pointer" data-toggle="modal" data-target="#addType">添加分类</span>
     </p>
 {% endif %}
 <ul class="form">
     {% for obj in wikiType %}
-		<li {% if obj.id == id %}class="selected"{% endif %}>
+    {{obj.id}}
+    {{id}}
+		<li {% if obj.id == id %} class="selected" {% endif %}>
             <a class="messages" href="javascript:;" onclick="window.location.href='/wiki/{{ obj.id }}/'">{{ obj.name }}
                 {% if user.is_active %}
                 <span class="w_edit" type={{ obj.id }}><i class="glyphicon glyphicon-edit"></i></span><span class="w_del" type="{{ obj.id }}"><i class="glyphicon glyphicon-remove"></i></span>
@@ -23,14 +24,15 @@
         </li>
     {% endfor %}
 </ul>
-
 </div>
+
+
 <div class="col-md-9">
-{% if user.is_active %}<p><a class="label label-warning" href="/wiki/add/{{ id }}/" target="_blank">添加Wiki</a></p>{% endif %}
+{% if user.is_active %}<p><a class="label label-info" href="/wiki/add/{{ id }}/" target="_blank">添加Wiki</a></p>{% endif %}
     {% for obj in wiki %}
         <div class="panel panel-default">
           <div class="panel-body">
-            {{ obj.content|safe }}
+            {{ obj.content_show|safe }}
           </div>
           <div class="panel-footer">{{ obj.add_time|fun }}{% if user.is_active %}&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:;" class="wi_del" type="{{ obj.id }}">删除</a>&nbsp;&nbsp;<a href="/wiki/add/{{ id }}/?id={{ obj.id }}">编辑</a>{% endif %}</div>
         </div>
@@ -53,7 +55,7 @@
         <form role="form">
           <div class="form-group">
             <p class="small" style="color: #c04b4b; font-weight: bold; display: none" id="ms_title" type="0">*分类名称必填</p>
-            <input type="type" class="form-control" id="msTitle" placeholder="名称">
+            <input type="text" class="form-control" id="type_name" placeholder="名称">
           </div>
         </form>
       </div>
@@ -87,11 +89,12 @@
             id = $(this).attr('type');
             $('#addType').modal('show');
             $('#myModalLabel').text('编辑分类');
-            $('#msTitle').val($(this).parents('a').text());
+            $('#type_name').val($(this).parents('a').text());
             $('#ms_title').attr('type', id);
 
             //addWikiType(id);
         });
+        // 删除按钮点击事件
         $('.w_del').click(function(event){
             event.stopPropagation();
             id = $(this).attr('type');
@@ -115,7 +118,7 @@
 
     function addWikiType(){
         // when elem equal id mind edit.
-        var name = $('#msTitle').val();
+        var name = $('#type_name').val();
         if(!name){
             return $('#ms_title').show();
         }else{
