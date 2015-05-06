@@ -13,10 +13,8 @@
 {% endif %}
 <ul class="form">
     {% for obj in wikiType %}
-    {{obj.id}}
-    {{id}}
 		<li {% if obj.id == id %} class="selected" {% endif %}>
-            <a class="messages" href="javascript:;" onclick="window.location.href='/wiki/{{ obj.id }}/'">{{ obj.name }}
+            <a class="messages" href="javascript:;" onclick="window.location.href='/wiki/{{ obj.id }}/'">{{ obj.name}}
                 {% if user.is_active %}
                 <span class="w_edit" type={{ obj.id }}><i class="glyphicon glyphicon-edit"></i></span><span class="w_del" type="{{ obj.id }}"><i class="glyphicon glyphicon-remove"></i></span>
                 {% endif %}
@@ -48,7 +46,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">添加WIKI分类:</h4>
+        <h4 class="modal-title" id="myModalLabel">添加Wiki分类:</h4>
       </div>
       <div id="s_ms_box">
       <div class="modal-body">
@@ -95,19 +93,10 @@
             //addWikiType(id);
         });
         // 删除按钮点击事件
-        $('.w_del').click(function(event){
-            event.stopPropagation();
-            id = $(this).attr('type');
-            if(confirm('Delete?')){
-                var url='/common/del/';
-                $.post(url, {'model':'wikitype', 'id':id}, function(data){
-                    data == 'ok' ? location.reload() : alert('Error');
-                })
-            }
-        });
+
         $('.wi_del').click(function(){
             id = $(this).attr('type');
-            if(confirm('Delete?')){
+            if(confirm('确定要删除?')){
                 var url='/common/del/';
                 $.post(url, {'model':'wiki', 'id':id}, function(data){
                     data == 'ok' ? location.reload() : alert('Error');
