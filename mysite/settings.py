@@ -38,7 +38,11 @@ DATABASES = {
     }
 }
 
-
+# 七牛云存储
+QINIU_ACCESS_KEY = 'sCjnbX8QE8sD5IedpjockW34MnI8bst6-fIktjWu'
+QINIU_SECRET_KEY = 'X-pj6uSMHb-WBrW1PD8q_nRXYMBbZn_8cDGiaYaK'
+QINIU_BUCKET_NAME = 'anybfans'
+QINIU_DOMAIN = 'anybfans.qiniudn.com'  # 域名
 
 
 # Local time zone for this installation. Choices can be found here:
@@ -132,8 +136,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 #TEMPLATE_CONTEXT_PROCESSORS
-# 注意django1.5的这个玩意儿与低版本的不同
-# 参考：https://docs.djangoproject.com/en/1.3/ref/settings/#std:setting-TEMPLATE_CONTEXT_PROCESSORS
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",

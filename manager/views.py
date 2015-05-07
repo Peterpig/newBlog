@@ -11,7 +11,7 @@ import simplejson as json
 import datetime
 import random
 import re, string
-#from common.superqiniu import SuperQiniu
+from common.superqiniu import SuperQiniu
 from BeautifulSoup import BeautifulSoup
 from markdown import markdown
 
@@ -148,7 +148,7 @@ def getPic(html):
 def CreatePicType(request):
     """
     ---------------------------------------
-    功能说明：创建图片
+    功能说明：创建图片类型
     ---------------------------------------
     时间:    2015－04－30
     ---------------------------------------
@@ -179,4 +179,28 @@ def CreatePicType(request):
         context['id'] = id
 
     return render(request, 'pic/addtype.html', context)
-            
+
+
+
+def UploadPic(request):
+    """
+    ---------------------------------------
+    功能说明：上传图片到七牛
+    ---------------------------------------
+    时间:    2015－05－07
+    ---------------------------------------
+    """
+    if request.method == 'POST':
+        img = request.FILES.get('Filedata', None)
+        type = request.POST.get('type', None)
+        if type:
+            qn = SuperQiniu(img, w=800, h=520)
+        else:
+            qn = SuperQiniu(img)
+        qn.uploadFile()
+        remote_url = qn.downloadFile()
+        key = qn.getKey()
+        pic = Pic.objects.create(img=remote_url, key=key)
+        return ajax.ajax_ok({'id':pic.id, 'url':pic.img, 'key':key})
+
+
