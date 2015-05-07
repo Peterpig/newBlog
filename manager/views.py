@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from common.form import BlogForm, PasswordForm, PicTypeForm, MypicForm
 
-from mysite.models import Type, Tag, Blog, BlogTag#, PicType, Pic, MyPic
+from mysite.models import Type, Tag, Blog, BlogTag, PicType, Pic, MyPic
 from django.shortcuts import get_object_or_404
 from common import ajax
 import simplejson as json
@@ -204,3 +204,15 @@ def UploadPic(request):
         return ajax.ajax_ok({'id':pic.id, 'url':pic.img, 'key':key})
 
 
+def picView(request, id):
+    """
+    ---------------------------------------
+    功能说明：展示相册中的照片
+    ---------------------------------------
+    时间:    2015－05－07
+    ---------------------------------------
+    """
+    context = {}
+    context['type'] = PicType.objects.get(pk=id)
+    context['pics'] = MyPic.objects.filter(type=id).order_by('-id')
+    return render(request, 'pic/pic.html', context)
