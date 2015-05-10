@@ -233,19 +233,6 @@ def blogTag(request, id):
     return render(request, 'blog_tag.html', context)
 
 
-def pic(request):
-    """
-    ---------------------------------------
-    功能说明：获取博客导图
-    ---------------------------------------
-    时间:     2015－04－19
-    -----
-    """
-    context = {}
-    context['pics'] = PicType.objects.order_by('-id')
-    return render(request, 'pic/index.html', context)
-
-
 def get_blog_detals():
     """
     ---------------------------------------
@@ -407,7 +394,6 @@ def ciphertext(request, id=None):
     时间:     2015－05－04
     ---------------------------------------
     """ 
-    print "ciphertext"
     if id and Blog.objects.filter(id=id).exists():
         blog = Blog.objects.get(pk=id)
         pwd = blog.is_show
@@ -425,3 +411,60 @@ def ciphertext(request, id=None):
                 return render(request, 'blog.html', context)
         return render(request, 'common/ciphertext.html')
     return HttpResponseRedirect('/404/')
+
+
+def commonDel(request):
+    """models to delete"""
+    if request.method == "POST":
+        str_model = request.POST.get('model')
+        id = request.POST.get('id')
+        obj_content = ContentType.objects.get(model=str_model)
+        if str_model == 'pictype':          # delete pic
+            img = []
+            img += MyPic.objects.filter(type=id).values_list('img', flat=True)
+            img.append(PicType.objects.get(pk=id).img)
+            keys = Pic.objects.filter(id__in=img).values_list('key', flat=True)
+            # delete remote file
+            qn = SuperQiniu(keys)
+            qn.delMoreFiles()
+            # delete models
+            MyPic.objects.filter(type=id).delete()
+        if str_model == 'pic':
+            MyPic.objects.filter(img=id).delete()
+            PicType.objects.filter(img=id).delete()
+            picture = Pic.objects.get(pk=id)
+            qn = SuperQiniu(picture.key)
+            qn.delFile()        # 删除远程图片
+        if str_model == 'wikitype':         # delete wiki
+            Wiki.objects.filter(category=id).delete()
+
+        obj = obj_content.get_object_for_this_type(pk=id).delete()
+        return HttpResponse('ok')
+
+
+
+def pic(request):
+    """
+    ---------------------------------------
+    功能说明：获取博客导图
+    ---------------------------------------
+    时间:     2015－04－19
+    -----
+    """
+    context = {}
+    context['pics'] = PicType.objects.order_by('-id')
+    return render(request, 'pic/index.html', context)
+
+
+def picView(request, id):
+    """
+    ---------------------------------------
+    功能说明：图册添加图片
+    ---------------------------------------
+    时间:     2015－05－10
+    -----
+    """    
+    context = {}
+    context['type'] = PicType.objects.get(pk=id)
+    context['pics'] = MyPic.objects.filter(type=id).order_by('-id')
+    return render(request, 'pic/pic.html', context)

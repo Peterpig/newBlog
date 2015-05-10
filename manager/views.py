@@ -216,3 +216,25 @@ def picView(request, id):
     context['type'] = PicType.objects.get(pk=id)
     context['pics'] = MyPic.objects.filter(type=id).order_by('-id')
     return render(request, 'pic/pic.html', context)
+
+
+def UploadMyPic(request, id):
+    """
+    ---------------------------------------
+    功能说明：上传图片到我的相册
+    ---------------------------------------
+    时间:    2015－05－10
+    ---------------------------------------
+    """
+    context = {}
+    if request.method == 'POST':
+        data = request.POST.get('data')
+        data = json.loads(data)
+        for obj in data:
+            MyPic.objects.creat(type=id, img=obj['pid'], desc=obj['desc'])
+        return HttpResponse('ok')
+    else:
+        pictype = get_object_or_404(PicType, pk=id)
+        context['pictype'] = pictype
+
+    return render(request, 'pic/addpic.html', context)
