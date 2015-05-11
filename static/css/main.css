@@ -134,8 +134,8 @@ body {
 }
 /* actGotop */
 .actGotop{position:fixed;_position:absolute;bottom:80px;right:50px;width:80px;height:80px;display:none;}
-.actGotop a,.actGotop a:link{width:80px;height:80px;display:inline-block;background:url(../img/blog7year_gotop.png) no-repeat;_background:url(../img/blog7year_gotop.gif) no-repeat;outline:none;opacity: 0.8}
-.actGotop a:hover{background:url(../img/blog7year_gotopd.gif) no-repeat;outline:none;}
+.actGotop a,.actGotop a:link{width:80px;height:80px;display:inline-block;background:url(../img/gotop.jpg) no-repeat;_background:url(../img/gotop.jpg) no-repeat;outline:none;opacity: 0.8}
+.actGotop a:hover{background:url(../img/gotop2.jpg) no-repeat;outline:none;}
 #tags_{
     clear: both; /* 清除左右浮动 */
     word-break: break-word; /* 文本行的任意字内断开 */

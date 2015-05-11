@@ -238,3 +238,56 @@ def UploadMyPic(request, id):
         context['pictype'] = pictype
 
     return render(request, 'pic/addpic.html', context)
+
+
+def uploadBlog(request):
+    """
+    ---------------------------------------
+    功能说明：上传博客
+    ---------------------------------------
+    时间:    2015－05－10
+    ---------------------------------------
+    """    
+    context = {}
+    now = datetime.datetime.now()
+    if request.method == 'POST':
+        type = request.POST.get('type')
+        tags = request.POST.get('id_tag', '')
+        file = request.POST.get('blog')
+        context  = file.read().decode('utf-8').split('---', 2)
+        content = [i for i in context if i]
+        head = content[0]
+        body = content[1]
+        title = re.findall(r'title: .*', head)
+        if title:
+            title = title[0].split(':')[1].strip()
+        else:
+            title = u'一个神秘的标题'
+
+        html = markdown(body)
+        rss = ''.join(BeautifulSoup(html).findAll(text=True))   # rss订阅
+        if len(body) > 500:
+            html = markdown(body[:500])
+        blog = Blog.objects.create(title=title, type=int(type), summary=summary, rss=rss, content=body, add_type=now)
+
+        img = getPic(blog.content_show)         # 抓取本页中的图片然后返回。如果没有，使用已有的
+        blog.img = img
+        blog.save()
+        if tags:
+            tags = json.loads(tags)
+            tag_list = []
+            for i in tags:
+                i = i.strip()
+                if i and not Tag.objects.filter(name__iexact=i).exists():
+                    tag = Tag.objects.creat(name=i)
+                    tag_list.append(tag)
+                elif i:
+                    tag_list.append(Tag.objects.filter(name__iexact=i)[0])
+
+            # 创建ThemeTag
+            for i in tag_list:
+                BlogTag.objects.create(blog=blog, tag=i)        
+        return HttpResponse('/')
+    context['types'] = Type.objects.order_by('-id')
+    context['tags'] = Tag.objects.order_by('-id')
+    return render(request, 'manager/uploadblog.html', context)
