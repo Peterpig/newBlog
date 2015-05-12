@@ -186,7 +186,6 @@ def tagsCloud():
     ---------------------------------------
     """
     tags = Tag.objects.all()
-    print tags
     tagscloud = []
     for obj in tags:
         size = random.randint(12, 30)   # 随机字体大小
@@ -442,7 +441,6 @@ def commonDel(request):
         return HttpResponse('ok')
 
 
-
 def pic(request):
     """
     ---------------------------------------
@@ -468,3 +466,33 @@ def picView(request, id):
     context['type'] = PicType.objects.get(pk=id)
     context['pics'] = MyPic.objects.filter(type=id).order_by('-id')
     return render(request, 'pic/pic.html', context)
+
+
+def pigeonhole(request):
+    """
+    ---------------------------------------
+    功能说明： 博客归档
+    ---------------------------------------
+    时间:     2015－05－12
+    -----
+    """      
+    blogs = Blog.objects.values('id', 'title', 'add_date').order_by('-add_date')
+    counts = len(blogs)
+    dates = set([str(i['add_date'].year)+str(i['add_date'].month) for i in blogs])
+
+    blogs_list = []
+    for i in dates:
+        dic = {}
+        b_info = []
+        count = 0
+        dic['ym'] = i[:4]+u'年'+i[4:]+u'月'
+        for obj in blogs:
+            if str(obj['add_date'].year)+str(obj['add_date'].month) == i:
+                dic_ = {}
+                dic_['blog'] = "<a href='/blog/%s/'>%s</a>" %(obj['id'], obj['title'])
+                b_info.append(dic_)
+                count += 1
+        dic['count'] = count
+        dic['b_info'] = b_info
+        blogs_list.append(dic)
+    return render(request, 'common/pigeonhole.html', {'blogs_list':blogs_list, 'count':counts})
