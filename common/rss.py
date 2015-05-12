@@ -5,11 +5,11 @@ from django.core.urlresolvers import reverse
 from mysite.models import Blog
 
 class LatestEntriesFeed(Feed):
-    title = u"BeginMan的技术博客"            # title
-    link = "http://blog.beginman.cn/"       # 首页链接
-    feed_url='http://blog.beginman.cn/'
-    feed_guid='http://blog.beginman.cn/'
-    author_name='BeginMan'
+    title = u"Anybfans的技术博客"            # title
+    link = "http://www.Anybfans.com/"       # 首页链接
+    feed_url='http://www.Anybfans.com/'
+    feed_guid='http://www.Anybfans.com/'
+    author_name='Anybfans'
     description = "在学习,实践中总结和分享Python,Django,Linux,Shell,Redis,Js,web,软件设计等技术."
 
     def items(self):
@@ -26,11 +26,11 @@ class LatestEntriesFeed(Feed):
 
     def item_link(self, item):
         """数据源链接地址"""
-        return 'http://blog.beginman.cn'+reverse('blog', args=[item.id])
+        return 'http://www.anybfans.com'+reverse('blog', args=[item.id])
 
     def item_categories(self, item):
         """数据源分类"""
         return  (item.getType().name, )
 
     def get_absolute_url(self):
-        return 'http://blog.beginman.cn/'
+        return 'http://www.anybfans.com/'
