@@ -1,14 +1,63 @@
+<div class="panel panel-default" id="user_info_sidebar">
 <!--个人简介与检索-->
-<div class="panel panel-default">
-  <div class="panel-body">
+<ul class="nav nav-tabs">
+    <li id="search-panel"><a href="#" onclick="ChangePanel(1)">搜索</a></li>
+    <li id="notice-panel"><a href="#" onclick="ChangePanel(2)">公告</a></li>
+    <li id="notice-panel"><a href="#" onclick="ChangePanel(3)">Others...</a></li>
+</ul>
+  <div class="panel-body" id="panel-user-info" style="display: none">
     <p class="text-center">
-        <img src="/site_media/img/my.jpg" alt="BeginMan" width="130px" height="130px" class="img-circle">
+        <img src="/site_media/img/my.jpg" alt="Anybfans" width="130px" height="130px" class="img-circle">
     </p>
-    <p class="text-center"><b class="text-warning">BeginMan</b></p>
+    <p class="text-center"><b class="text-warning">Anybfans</b></p>
     <p class="text-center text-muted">Pythoner.热爱生活和IT.</p>
     <div class="form-group has-warning">
         <form action="/blog/search/" method="get">{% csrf_token %}
         <input type="text" class="form-control" id="search" name="search" placeholder="Search.Enter"></div>
         </form>
   </div>
+
+<!--公告-->
+  <div class="panel-body" id="panel-notice">
+    <p class="text-center"><b class="text-warning">我是公告</b></p>
+  </div>
+
+<!--others..-->
+  <div class="panel-body" id="panel-others">
+    <p class="text-center"><b class="text-warning">我是others</b></p>
+  </div>
+
 </div>
+<script type="text/javascript">
+    $(function(){
+        ChangePanel(1);
+    });
+
+    function ChangePanel (type) {
+        if ( type == "1" ) {
+            $("#panel-user-info").show('slow');
+            $("#panel-notice").hide();
+            $("#panel-others").hide();
+            $("#search-panel").attr("class","active");
+            $("#notice-panel").attr("class","");
+            $("#notice-others").attr("class","");
+        }else if( type == "2" ){
+            $("#panel-user-info").hide();
+            $("#panel-others").hide();
+            $("#panel-notice").show('slow');
+            $("#notice-panel").attr("class","active");
+            $("#search-panel").attr("class","");
+            $("#search-others").attr("class","");
+            
+        }else{
+            $("#panel-user-info").hide();
+            $("#panel-notice").hide();
+            $("#panel-others").show('slow');
+            $("#notice-others").attr("class","active");
+            $("#notice-panel").attr("class","");
+            $("#search-panel").attr("class","");
+            
+        }
+    }
+
+</script>

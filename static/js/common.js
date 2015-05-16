@@ -2,6 +2,7 @@ $(function($){
     webnav();   // top nav
     CommonDel();    // common delete.
     MyPicEdit();
+
 })
 
 //按钮禁用与激活

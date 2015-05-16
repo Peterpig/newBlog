@@ -78,8 +78,7 @@ def search(request):
     context = {}
     key = request.GET.get('search', '')
     context['key'] = key
-    context['blog'] = Blog.objects.filter(
-        title__icontains=key).order_by('-id')     # 标题检索
+    context['blogs'] = Blog.objects.filter(title__icontains=key).order_by('-id')     # 标题检索
     return render(request, 'search.html', context)
 
 

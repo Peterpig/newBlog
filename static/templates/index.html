@@ -7,7 +7,7 @@
         {% autopaginate blog %}
         {% for obj in blog %}
         <div class="media">
-          <a class="pull-left" href="/blog/{{ obj.id }}/">
+          <a class="pull-left" href="/blog/{{ obj.id }}/"><!--博客展示图-->
             <img class="media-object img-circle" src="{{ obj.img }}" width="120" height="120">
           </a>
           <div class="media-body">
