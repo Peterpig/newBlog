@@ -2,7 +2,7 @@
 {% include 'common/userinfo.html' %}
 <!--右侧：博客分类-->
 <div class="panel panel-default">
-  <div class="panel-heading">博客分类</div>
+  <div class="panel-heading"><span class="glyphicon glyphicon-tag" aria-hidden="true"> 博客分类</span></div>
   <div class="panel-body">
     <p class="form-group has-warning" id="b_type">
         {% for obj in types %}
@@ -14,7 +14,7 @@
 
 <!--热门-->
 <div class="panel panel-default">
-  <div class="panel-heading">热门博客</div>
+  <div class="panel-heading"><span class="glyphicon glyphicon-fire" aria-hidden="true"> 热门博客</span></div>
   <div class="panel-body">
     <p class="form-group has-warning" id="b_hot">
         {% for obj in hot %}
@@ -26,7 +26,7 @@
 
 <!--标签云-->
 <div class="panel panel-default">
-  <div class="panel-heading">标签云</div>
+  <div class="panel-heading"><span class="glyphicon glyphicon-cloud" aria-hidden="true"> 标签云</span></div>
   <div class="panel-body">
     <p class="form-group has-warning" id="b_tag">
         {% for obj in tag %}

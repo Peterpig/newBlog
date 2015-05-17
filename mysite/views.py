@@ -2,6 +2,7 @@
 import random
 import simplejson as json
 
+from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -78,7 +79,7 @@ def search(request):
     context = {}
     key = request.GET.get('search', '')
     context['key'] = key
-    context['blogs'] = Blog.objects.filter(title__icontains=key).order_by('-id')     # 标题检索
+    context['blogs'] = Blog.objects.filter(Q(title__icontains=key) | Q(content__icontains=key)).order_by('-id')     # 标题检索
     return render(request, 'search.html', context)
 
 

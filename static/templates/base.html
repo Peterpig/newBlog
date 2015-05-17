@@ -42,8 +42,8 @@
     <!--END-->
     {% block css %}{% endblock %}
   </head>
-  <body>
-    {% if not is_blog_view %}{% include 'common/head.html' %}{% else %}<a href="/" class="text-center" style="display: block; margin: 0 auto">返回首页</a>{% endif %}
+  <body {% if not is_blog_view %} style=" padding-top: 90px;"{% endif %}>
+    {% if not is_blog_view %}{% include 'common/head.html' %}{% else %}{% endif %}
     {% if not is_blog_view %}
     <div class="container theme-showcase" style="width: 1250px;">
         <div class="row">

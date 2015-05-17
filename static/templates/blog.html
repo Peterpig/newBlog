@@ -8,12 +8,13 @@
 {% endblock %}
 {% block contentBlog %}
 
-<!--blog-->
-        <div class="media-body">
-          <h1 class="text-center"><span class="Tblog">{{ blog.title }}</span></h1>
+<!--blog详情页面-->
+        <div class="media-body">    
+        <h1 class="text-center"><span class="Tblog">{{ blog.title }}</span></h1>
             <hr style="margin: 10px 0;" />
-            <p class="small text-muted">
-              BeginMan
+            <p class="text-muted small">
+            <a href="/" class="navbar navbar-right"><span class="label label-success">返回首页</span></a>
+              #作者
               发布于 {{ blog.add_date|fun }} &nbsp;&nbsp;
               持续热度：{{ blog.counts }}℃&nbsp;&nbsp;
               类别：<a href="/blog/type/{{ blog.type}}/" class="label label-warning small">{{ blog.getType.name }}</a>
@@ -31,8 +32,7 @@
        <div class="row" style="color: #999;">
                <p>作者：BeginMan</p>
                <p>网址: <a href="{{ request.session.domain }}{{ request.path }}">{{ request.session.domain }}{{ request.path }}</a></p>
-               <small>本文版权归作者，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</small>
-               </div>
+       </div>
        </div>
     </div>
 <p>{% if pn.pre %}<a href="/blog/{{ pn.pre }}/"><span class="label label-info"><i class="icon-arrow-left icon-white"></i>&nbsp;上一篇：{{ title_pre }}</span></a>{% endif %}

@@ -1,9 +1,8 @@
 body {
-  padding-top: 100px;
+  padding-top:30px; 
   padding-bottom: 0px;
-  background:url("../img/gray_jean.png") #FFF;
   color:#333;
-  background:#fdfdfd;
+  background:url("/site_media/img/gray_jean.png") #FFF;
   font:15px/1.625 "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
