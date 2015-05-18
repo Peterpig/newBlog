@@ -132,7 +132,7 @@ body {
     border: 1px solid #ddd;
 }
 /* actGotop */
-.actGotop{position:fixed;_position:absolute;bottom:80px;right:10px;width:80px;height:80px;display:none;}
+.actGotop{position:fixed;_position:absolute;bottom:80px;right:-15px;width:80px;height:80px;display:none;}
 .actGotop a,.actGotop a:link{width:80px;height:80px;display:inline-block;background:url(../img/gotop.jpg) no-repeat;_background:url(../img/gotop.jpg) no-repeat;outline:none;opacity: 0.8}
 .actGotop a:hover{background:url(../img/gotop2.jpg) no-repeat;outline:none;}
 #tags_{

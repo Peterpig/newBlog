@@ -19,6 +19,8 @@
           <li id="manage"><a href="/manage/upload/">Upload+</a></li>
           <li><a href="/">Hi,{{user|capfirst}}</a></li>
           <li><a href="/logout/">logout</a></li>
+          {% else %}
+          <li><a href="/login/">登录</a></li>
           {% endif %}
           <li><a href="/feed/"><img src="/site_media/img/rss.png" alt="" width="25" height="25"/></a></li>
           </ul>
