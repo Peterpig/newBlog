@@ -141,10 +141,10 @@ class PasswordForm(forms.Form):
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
         self.newpwd = None
-        super(PassWordForm, self).__init__(*args, **kwargs)
+        super(PasswordForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        cleaned_data = super(PassWordForm, self).clean()
+        cleaned_data = super(PasswordForm, self).clean()
         oldpwd = cleaned_data.get("oldpwd")
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")

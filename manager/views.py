@@ -68,13 +68,12 @@ def addBlog(request):
                 blog = Blog.objects.get(id=obj)
             else:
                 blog = Blog.objects.create(
-                    title=title, type=int(type), summary=summary, rss=rss, content=content, add_date=now, is_show=pwd
+                    title=title, type=int(type), summary=summary, rss=rss, content=content, content_show=html, add_date=now, is_show=pwd
                 )
             # 博客导图
             img = getPic(blog.content_show)
             blog.img = img
             blog.save()
-
             if tags:
                 tags = json.loads(tags)
                 tag_list = []
@@ -138,12 +137,29 @@ def getPic(html):
     ---------------------------------------
     """
     # 获取文章中的图片，如果有：抓取图片url 。否则使用本地图片
-    soup = BeautifulSoup(html)
-    s = soup.find('img')
+    try:        
+        soup = BeautifulSoup(html)
+        s = soup.find('img')
+    except Exception, e:
+        s = ""
     if s:
         return s['src']
     return '/site_media/img/blog/%s.jpg' % (random.choice(range(1, 10)))
 
+
+def delBlog(request):
+    """
+    ---------------------------------------
+    功能说明：删除博客
+    ---------------------------------------
+    时间:    2015－04－27
+    ---------------------------------------
+    """    
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        BlogTag.objects.filter(blog__id=id).delete()
+        Blog.objects.filter(id=id).delete()
+        return HttpResponse('ok')
 
 def CreatePicType(request):
     """
@@ -291,3 +307,26 @@ def uploadBlog(request):
     context['types'] = Type.objects.order_by('-id')
     context['tags'] = Tag.objects.order_by('-id')
     return render(request, 'manager/uploadblog.html', context)
+
+
+def changePwd(request):
+    """
+    ---------------------------------------
+    功能说明：修改密码
+    ---------------------------------------
+    时间:    2015－05－18
+    ---------------------------------------
+    """
+    context = {}        
+    user = request.user
+    context['form'] = PasswordForm()
+    if request.method == 'POST':
+        form = PasswordForm(user, request.POST)
+        if form.is_valid():
+            newpwd = form.cleaned_data.get('passsword1', None)
+            if newpwd:
+                user.set_password(newpwd)
+                user.save()
+                return HttpResponseRedirect('/')
+        context['form'] = form
+    return render(request, 'manager/pwd.html', context)
