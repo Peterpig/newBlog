@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 
-from common.form import BlogForm, PasswordForm, PicTypeForm, MypicForm
+from common.form import BlogForm, PasswordForm, PicTypeForm, MypicForm, BlogDetail
 
 from mysite.models import Type, Tag, Blog, BlogTag, PicType, Pic, MyPic
 from django.shortcuts import get_object_or_404
@@ -330,3 +330,35 @@ def changePwd(request):
                 return HttpResponseRedirect('/')
         context['form'] = form
     return render(request, 'manager/pwd.html', context)
+
+
+def blog_detal(request):
+    """
+    ---------------------------------------
+    功能说明：博客标题、描述、关键字设置，用于SEO和改变博客名称
+    ---------------------------------------
+    时间:     2015－04－17
+    ---------------------------------------
+    """  
+    context = {}
+    user = request.user
+    context['form'] = BlogDetail()
+    if request.method == 'POST':
+        form = PasswordForm(user, request.POST)
+        if form.is_valid():
+            blog_name = request.POST.get('blog_name')
+            blog_title = request.POST.get('blog_title')
+            blog_description = request.POST.get('blog_description')
+            blog_keywords = request.POST.get('blog_keywords')
+            blog_url = request.POST.get('blog_url')
+            blog_tongji = request.POST.get('blog_tongji')
+
+            BlogDetail.objects.filter(pk=1).update(blog_name=blog_name,
+                                                   blog_title=blog_title,
+                                                   blog_description=blog_description,
+                                                   blog_keywords=blog_keywords,
+                                                   blog_url=blog_url,
+                                                   blog_tongji=blog_tongji)
+    else:
+        pass
+    return render(request, 'manager/blog_detail.html', context)

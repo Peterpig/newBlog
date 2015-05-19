@@ -8,9 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'mysite.views.home', name='home'),                   # 首页
-    url(r'^about/$', 'mysite.views.about', name='about'),                   # about
-    url(r'^resume/$', 'mysite.views.resume', name='resume'),                   # contact
-    url(r'^manage/', include('manager.urls')),                      # manager
+    url(r'^about/$', 'mysite.views.about', name='about'),           # 关于我
+    url(r'^resume/$', 'mysite.views.resume', name='resume'),        # resume
+    url(r'^manage/', include('manager.urls')),                      # 后台管理
 )
 
 # Serve static files for admin, use this for debug usage only

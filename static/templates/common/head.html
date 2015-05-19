@@ -15,9 +15,10 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
+           <li><a href="#">Hi,{{user|capfirst}}</a></li>
           <li id="manage"><a href="/manage/add/">Add+</a></li>
           <li id="manage"><a href="/manage/upload/">Upload+</a></li>
-          <li><a href="/">Hi,{{user|capfirst}}</a></li>
+          <li id="manage"><a href="/manage/blog_detal/">BlogDetail</a></li>
           <li><a href="/logout/">logout</a></li>
           {% else %}
           <li><a href="/login/">登录</a></li>

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="form-signin" role="form" action="/manage/blog_detail/" method='post'>
+{% csrf_token %}
+        <h2 class="form-signin-heading">修改博客详情</h2><br/>
+        {{ form.as_p }}
+        <button class="btn btn-lg btn-primary" type="submit">保 存</button>
+      </form>
+{% endblock %}

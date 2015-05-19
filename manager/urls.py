@@ -8,6 +8,7 @@ urlpatterns = patterns('manager.views',
     url(r'^add_type/$', 'addType', name='add_type'),            # T
     url(r'^user/pwd/$', 'changePwd', name='changePwd'),             #PWD
     url(r'^blog/del/$', 'delBlog', name='delBlog'),                 # Delblog
+    url(r'^blog_detal/$', 'blog_detal', name='blog_detal'),                 # Delblog
 
     url(r'^pic/create_type/$', 'CreatePicType', name='CreatePicType'),  # create type
     url(r'^pic/upload_my_pic/(?P<id>\d+)/$', 'UploadMyPic', name='UploadMyPic'),  # up mypic

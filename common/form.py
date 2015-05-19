@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from mysite.models import Type, Blog, Wiki, PicType, MyPic, Words
+from mysite.models import Type, Blog, Wiki, PicType, MyPic, Words, BlogDetal
 
 from wmd.widgets import MarkDownInput   # 从wmd编辑器导入html组件
 
@@ -227,13 +227,47 @@ class MypicForm(ModelForm):
         model = MyPic
         fields = ('type', 'desc')
 
-"""
-class WordsForm(ModelForm):
-    english = forms.CharField(label=u'单词', widget=forms.TextInput(
-        attrs = {'class': 'from-control', 'placeholder': u'英文'})
+
+class BlogDetail(ModelForm):
+    """
+    ---------------------------------------
+    功能说明：设置博客的网址等。增加可移植性、更好的SEO
+    ---------------------------------------
+    时间:     2015－05－19
+    ---------------------------------------
+    """  
+
+    blog_name = forms.CharField(max_length=100, label=u'博客名称', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'博客名称', 'required': ''}
+        )
+    )
+
+    blog_title = forms.CharField(max_length=100, label=u'博客标题', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'博客标题', 'required': ''}
+        )
+    )
+
+    blog_description = forms.CharField(max_length=100, label=u'博客描述', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'博客描述，用于百度等搜索引擎检索', 'required': ''}
+        )
+    )
+
+    blog_keywords = forms.CharField(max_length=100, label=u'博客关键字', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'博客关键字，用于百度等搜索引擎检索', 'required': ''}
+        )
+    )
+
+    blog_url = forms.CharField(max_length=100, label=u'网址', widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': u'博客网址', 'required': ''}
+        )
+    )
+
+    blog_tongji = forms.CharField(max_length=100, label=u'统计代码', widget=forms.Textarea(
+        attrs={'class': 'form-control', 'placeholder': u'百度等统计代码', 'required': ''}
+        )
     )
 
     class Meta:
-        model = Words
-        fields = ('english')
-"""
+        model = BlogDetal
+        fields = ('blog_name', 'blog_title', 'blog_description', 'blog_keywords', 'blog_url', 'blog_tongji')
+
