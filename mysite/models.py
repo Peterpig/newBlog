@@ -97,9 +97,9 @@ class BlogDetal(models.Model):
     """
     blog_name = models.CharField(max_length=50)
     blog_title = models.CharField(max_length=50)
-    blog_description = models.CharField(max_length=100)
+    blog_description = models.CharField(max_length=300)
     blog_keywords = models.CharField(max_length=300)
-    blog_url = models.CharField(max_length=50)
+    blog_url = models.CharField(max_length=100)
     blog_tongji = models.CharField(max_length=500)
 
     def __unicode__(self):

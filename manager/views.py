@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from common.form import BlogForm, PasswordForm, PicTypeForm, MypicForm, BlogDetail
 
-from mysite.models import Type, Tag, Blog, BlogTag, PicType, Pic, MyPic
+from mysite.models import Type, Tag, Blog, BlogTag, BlogDetal, PicType, Pic, MyPic
 from django.shortcuts import get_object_or_404
 from common import ajax
 import simplejson as json
@@ -332,7 +332,7 @@ def changePwd(request):
     return render(request, 'manager/pwd.html', context)
 
 
-def blog_detal(request):
+def blog_detail(request):
     """
     ---------------------------------------
     功能说明：博客标题、描述、关键字设置，用于SEO和改变博客名称
@@ -342,9 +342,9 @@ def blog_detal(request):
     """  
     context = {}
     user = request.user
-    context['form'] = BlogDetail()
+    #context['form'] = BlogDetail()
     if request.method == 'POST':
-        form = PasswordForm(user, request.POST)
+        form = BlogDetail(user, request.POST)
         if form.is_valid():
             blog_name = request.POST.get('blog_name')
             blog_title = request.POST.get('blog_title')
@@ -353,12 +353,18 @@ def blog_detal(request):
             blog_url = request.POST.get('blog_url')
             blog_tongji = request.POST.get('blog_tongji')
 
-            BlogDetail.objects.filter(pk=1).update(blog_name=blog_name,
+            BlogDetal.objects.filter(pk=1).update(blog_name=blog_name,
                                                    blog_title=blog_title,
                                                    blog_description=blog_description,
                                                    blog_keywords=blog_keywords,
                                                    blog_url=blog_url,
                                                    blog_tongji=blog_tongji)
     else:
-        pass
+        
+        detail = BlogDetal.objects.get(pk=1)
+        row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}
+        context['form'] = BlogDetail(row)
+        print "context['form'] == ",context['form']
+
+
     return render(request, 'manager/blog_detail.html', context)
