@@ -366,5 +366,4 @@ def blog_detail(request):
         context['form'] = BlogDetail(row)
         print "context['form'] == ",context['form']
 
-
     return render(request, 'manager/blog_detail.html', context)
