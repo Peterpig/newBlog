@@ -343,6 +343,7 @@ def blog_detail(request):
     context = {}
     user = request.user
     #context['form'] = BlogDetail()
+    print user.id
     if request.method == 'POST':
         form = BlogDetail(user, request.POST)
         if form.is_valid():
@@ -361,9 +362,11 @@ def blog_detail(request):
                                                    blog_tongji=blog_tongji)
     else:
         
-        detail = BlogDetal.objects.get(pk=1)
-        row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}
-        context['form'] = BlogDetail(row)
-        print "context['form'] == ",context['form']
+        try:
+            detail = BlogDetal.objects.get(pk=1)
+            row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}            
+        except Exception, e:
+            row = {}
 
+        context['form'] = BlogDetail(row)
     return render(request, 'manager/blog_detail.html', context)

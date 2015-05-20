@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h2>博客归档</h2>
-<p class="text-muted">迄今为止,孜孜不倦的博主已经写了 <code>{{ count }}</code> 篇博客了,一入代码深似海,共勉吧!</p>
+<p class="text-muted">迄今为止,孜孜不倦的博主已经写了<code>&nbsp;{{ count }}&nbsp;</code>篇博客了,一入代码深似海,共勉吧!</p>
 {% for obj in blogs_list %}
-    <b>{{ obj.ym }}({{ obj.count }})</b>
-    <ul>
-       {% for i in obj.b_info %}
-           <li>{{ i.blog|safe }}</li>
-       {% endfor %}
-    </ul>
+<div class="panel panel-success" style="width: 562.2px">
+  <div class="panel-heading">
+    {{ obj.ym }}&nbsp;[{{ obj.count }}]
+  </div>
+
+  <div class="panel-body">
+    {% for i in obj.b_info %}
+       <li>{{ i.blog|safe }}</li>
+    {% endfor %}</div>
+  </div>
 {% endfor %}
 {% endblock %}

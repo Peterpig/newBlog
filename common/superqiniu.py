@@ -1,11 +1,4 @@
 #coding=utf-8
-"""
-==================================
-function:   基于七牛云存储，进行上传处理
-addDate:    2014-06-08
-author:     BeginMan
-==================================
-"""
 import qiniu.conf
 import qiniu.rs
 import qiniu.io

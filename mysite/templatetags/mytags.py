@@ -1,5 +1,6 @@
 # coding=utf-8
 from django import template
+from mysite.models import BlogDetal
 import re
 import arrow
 register = template.Library()
@@ -39,5 +40,27 @@ def tranArrowDate(value):
     return u.humanize(locale='zh_CN')
 
 
+def get_blog_detail(value):
+    dic = {}
+    detal = BlogDetal.objects.get(pk=1) or ''
+
+    if detal:
+        dic['name'] = detal.blog_name
+        dic['title'] = detal.blog_title
+        dic['description'] = detal.blog_description
+        dic['keywords'] = detal.blog_keywords
+        dic['url'] = detal.blog_url
+        dic['tongji'] = detal.blog_tongji
+    else:
+        # 默认值
+        dic['name'] = 'Anybfans'
+        dic['title'] = 'Anybfans博客'
+        dic['description'] = '享受编程的乐趣'
+        dic['keywords'] = 'Anybfans,anybfans'
+        dic['url'] = 'www.anybfans.com'
+
+    return dic[value]
+
 register.filter('cut_title', cutTitle)
 register.filter('fun', tranArrowDate)
+register.filter('details', get_blog_detail)

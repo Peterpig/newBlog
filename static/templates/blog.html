@@ -30,8 +30,8 @@
     <hr/>
     <div class="alert">
        <div class="row" style="color: #999;">
-               <p>作者：BeginMan</p>
-               <p>网址: <a href="{{ request.session.domain }}{{ request.path }}">{{ request.session.domain }}{{ request.path }}</a></p>
+               <p>作者：{{blog.author}}</p>
+               <p>网址: <a href="http://{{ request.session.domain }}{{ request.path }}">{{ request.session.domain }}{{ request.path }}</a></p>
        </div>
        </div>
     </div>

@@ -1,30 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>{{detals.title}}</title>
-    <meta name="description" content="{{detals.description}}" />
-    <meta name="keywords" content="{{detals.keywords}}">
-    <link rel='next' href='{{detals.url}}/about/' />
-    <link rel="canonical" href="{{detals.url}}" />
-    <meta property="og:title" content="{{detals.name}} - {{detals.url}}" />
-    <meta property="og:type" content="blog" />
-    <meta property="og:url" content="{{detals.url}}" />
-    <!--百度统计代码-->
-      <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "//hm.baidu.com/hm.js?{{detals.tongji}}";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
-    {% block meta %}{% endblock %}
+    {% include "common/meta.html" %}
     <!-- Bootstrap core CSS -->
     <link rel="shortcut icon" href="/site_media/img/favicon.ico">
     <link href="/site_media/bootstrap/css/bootstrap.css" rel="stylesheet">

@@ -1,8 +1,9 @@
 #coding=utf-8
 #中间件扩展
-__author__ = 'beginman'
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from django.shortcuts import render
+from mysite.models import BlogDetal
 
 LOGIN_URLS = ['/manage/']
 ANONYMOUS_URLS = ['/manage/userGreat/', '/manage/user/']
@@ -23,5 +24,3 @@ class Mymiddleware(object):
             for obj in LOGIN_URLS:
                 if path.startswith(obj):
                     return HttpResponseRedirect('/login/?url=%s' % path)
-
-

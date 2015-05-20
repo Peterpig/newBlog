@@ -27,21 +27,6 @@ else:
     MYSQL_PASS = '123'
     MYSQL_DB   = 'newblog'
 
-# 博客详情
-# from django.db import connection
-# #BLOG_DETAL = BlogDetal.objects.get(pk=1)
-# sql = """select * from blogdetal where id = 1"""
-# cur = connection.cursor()
-# cur.execute(sql)
-# fetchall = cursor.fetchall()
-
-# BLOG_NAME = ''
-# BLOG_TITLE = ''
-# BLOG_DESCRPTION = ''
-# BLOG_KEYWORDS = ''
-# BLOG_URL = ''
-# BLOG_TONGJI = ''
-
 
 DATABASES = {
     'default': {

@@ -237,22 +237,22 @@ class BlogDetail(ModelForm):
     ---------------------------------------
     """  
 
-    blog_name = forms.CharField(max_length=100, label=u'博客名称', widget=forms.TextInput(
+    blog_name = forms.CharField(max_length=50, label=u'博客名称', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'博客名称', 'required': ''}
         )
     )
 
-    blog_title = forms.CharField(max_length=100, label=u'博客标题', widget=forms.TextInput(
+    blog_title = forms.CharField(max_length=50, label=u'博客标题', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'博客标题', 'required': ''}
         )
     )
 
-    blog_description = forms.CharField(max_length=100, label=u'博客描述', widget=forms.TextInput(
+    blog_description = forms.CharField(max_length=300, label=u'博客描述', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'博客描述，用于百度等搜索引擎检索', 'required': ''}
         )
     )
 
-    blog_keywords = forms.CharField(max_length=100, label=u'博客关键字', widget=forms.TextInput(
+    blog_keywords = forms.CharField(max_length=300, label=u'博客关键字', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'博客关键字，用于百度等搜索引擎检索', 'required': ''}
         )
     )
@@ -263,7 +263,7 @@ class BlogDetail(ModelForm):
     )
 
     blog_tongji = forms.CharField(max_length=100, label=u'统计代码', widget=forms.Textarea(
-        attrs={'class': 'form-control', 'placeholder': u'百度等统计代码', 'required': ''}
+        attrs={'class': 'form-control', 'placeholder': u'百度等统计代码！', 'required': ''}
         )
     )
 

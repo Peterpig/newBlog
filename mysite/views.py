@@ -47,7 +47,7 @@ def login_(request):
             if user:
                 login(request, user)
                 if form.get_auto_login():   # 设置session
-                    request.session.set_expiry(None)    # 设置过期时间
+                    request.session.set_expiry(10)    # 设置过期时间
                 return HttpResponseRedirect('/')
         context['form'] = form
     else:
@@ -479,7 +479,6 @@ def pigeonhole(request):
     blogs = Blog.objects.values('id', 'title', 'add_date').order_by('-add_date')
     counts = len(blogs)
     dates = set([str(i['add_date'].year)+str(i['add_date'].month) for i in blogs])
-
     blogs_list = []
     for i in dates:
         dic = {}
@@ -495,4 +494,5 @@ def pigeonhole(request):
         dic['count'] = count
         dic['b_info'] = b_info
         blogs_list.append(dic)
+
     return render(request, 'common/pigeonhole.html', {'blogs_list':blogs_list, 'count':counts})
