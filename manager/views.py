@@ -342,6 +342,7 @@ def blog_detail(request):
     """  
     context = {}
     user = request.user
+    
     #context['form'] = BlogDetail()
     if request.method == 'POST':
         form = BlogDetail(user, request.POST)
