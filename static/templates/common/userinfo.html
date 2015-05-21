@@ -1,9 +1,9 @@
 <div class="panel panel-default" id="user_info_sidebar">
 <!--个人简介与检索-->
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs nav-justified">
     <li id="search-panel"><a href="#" onclick="ChangePanel(1)">搜索</a></li>
     <li id="notice-panel"><a href="#" onclick="ChangePanel(2)">公告</a></li>
-    <li id="notice-panel"><a href="#" onclick="ChangePanel(3)">Others...</a></li>
+    <li id="other-panel"><a href="#" onclick="ChangePanel(3)">Others...</a></li>
 </ul>
   <div class="panel-body" id="panel-user-info" style="display: none">
     <p class="text-center">
@@ -40,20 +40,20 @@
             $("#panel-others").hide();
             $("#search-panel").attr("class","active");
             $("#notice-panel").attr("class","");
-            $("#notice-others").attr("class","");
+            $("#other-panel").attr("class","");
         }else if( type == "2" ){
             $("#panel-user-info").hide();
             $("#panel-others").hide();
             $("#panel-notice").show('slow');
             $("#notice-panel").attr("class","active");
             $("#search-panel").attr("class","");
-            $("#search-others").attr("class","");
+            $("#other-panel").attr("class","");
             
         }else{
             $("#panel-user-info").hide();
             $("#panel-notice").hide();
             $("#panel-others").show('slow');
-            $("#notice-others").attr("class","active");
+            $("#other-panel").attr("class","active");
             $("#notice-panel").attr("class","");
             $("#search-panel").attr("class","");
             
