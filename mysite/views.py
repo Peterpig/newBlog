@@ -11,7 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
-from common.form import LoginForm, WikiForm
+from common.form import LoginForm, WikiForm, Register
 
 from mysite.models import *
 #from common.superqiniu import SuperQiniu
@@ -54,6 +54,39 @@ def login_(request):
         form = LoginForm()
         context['form'] = form
     return render(request, 'login.html', context)
+
+
+def register(request):
+    """
+    ---------------------------------------
+    功能说明：注册
+    ---------------------------------------
+    时间:     2015－04－10
+    ---------------------------------------
+    """    
+    context = {}
+    form = Register()
+    context['form'] = form
+    if request.method == 'POST':
+        form = Register(request, request.POST)
+        print "!111"
+        if form.is_valid():
+            print "23232323232"
+            username = form.cleaned_data['username']
+            user_name = form.cleaned_data['username']
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
+            
+            print "*"*30
+            print username
+            print user_name
+            print password1
+            print password2
+            print "*"*30
+        context['form'] = form
+
+            
+    return render(request, 'register.html', context)
 
 
 def logout_(request):

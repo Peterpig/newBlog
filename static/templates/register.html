@@ -1,17 +1,8 @@
-{% extends 'base_index.html' %}
-{% block css %}
-    <style>
-    .form-signin {
-          max-width: 330px;
-          padding: 15px;
-          margin: 0 auto;
-        }
-    </style>
-{% endblock %}
+{% extends 'base.html' %}
 {% block content %}
-<form class="form-signin" role="form" action="/register/" method='post'>{% csrf_token %}
-        <h2 class="form-signin-heading">CodeTheme注册</h2>
+<form class="form-signin col-md-10" role="form" action="/register/" method='post'>{% csrf_token %}
+        <h2 class="form-signin-heading">注册</h2>
         {{ form.as_p }}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">注 册</button>
+        <button class="btn btn-lg btn-primary" type="submit">注 册</button>
       </form>
 {% endblock %}

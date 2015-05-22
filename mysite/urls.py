@@ -27,6 +27,7 @@ urlpatterns += patterns('',
 urlpatterns += patterns('mysite.views',
     url(r'^login/$', 'login_', name='login'),                           # 登陆
     url(r'^logout/$', 'logout_', name='logout'),                        # 登出
+    url(r'^register/$', 'register', name='register'),                        # 登出
     url(r'^blog/(?P<id>\d+)/$', 'blog', name='blog'),                        # 正文
     url(r'^blog/search/$', 'search', name='search'),                    # 检索
     url(r'^blog/common/$', 'sidebar', name='sidebar'),                  # 侧栏异步加载

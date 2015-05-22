@@ -6,6 +6,21 @@ from django.utils.safestring import mark_safe
 import markdown
 
 
+class User(models.Model):
+    """
+    用户
+    """
+    username = models.CharField(max_length=50)
+    user_name = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.user_name
+
+    class Meta:
+        db_table = 'auth_user'
+
+
 class Type(models.Model):
     """
     分类
