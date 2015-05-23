@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from common.form import LoginForm, WikiForm, Register
@@ -63,29 +64,23 @@ def register(request):
     ---------------------------------------
     时间:     2015－04－10
     ---------------------------------------
-    """    
+    """
     context = {}
     form = Register()
     context['form'] = form
     if request.method == 'POST':
         form = Register(request, request.POST)
-        print "!111"
+        context['form'] = form
         if form.is_valid():
-            print "23232323232"
             username = form.cleaned_data['username']
-            user_name = form.cleaned_data['username']
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
-            
-            print "*"*30
-            print username
-            print user_name
-            print password1
-            print password2
-            print "*"*30
-        context['form'] = form
+            form.create()
+            user = authenticate(username=username, password=password1)
+            if user:
+                login(request, user)
+                return HttpResponseRedirect('/')
 
-            
     return render(request, 'register.html', context)
 
 
@@ -112,7 +107,9 @@ def search(request):
     context = {}
     key = request.GET.get('search', '')
     context['key'] = key
-    context['blogs'] = Blog.objects.filter(Q(title__icontains=key) | Q(content__icontains=key)).order_by('-id')     # 标题检索
+    if key:
+        context['blogs'] = Blog.objects.filter(Q(title__icontains=key) | Q(content__icontains=key)).order_by('-id')     # 标题检索
+
     return render(request, 'search.html', context)
 
 
@@ -274,7 +271,10 @@ def get_blog_detals():
     ---------------------------------------
     """
     dic = {}
-    detal = BlogDetal.objects.get(pk=1) or ''
+    try:
+        detal = BlogDetal.objects.get(pk=1)
+    except Exception, e:
+        detal = ''
 
     if detal:
         dic['name'] = detal.blog_name
@@ -290,7 +290,7 @@ def get_blog_detals():
         dic['description'] = '享受编程的乐趣'
         dic['keywords'] = 'Anybfans,anybfans'
         dic['url'] = 'www.anybfans.com'
-
+        dic['tongji'] = ''
     return dic
 
 
@@ -347,12 +347,11 @@ def wiki(request, id=None):
     ---------------------------------------
     """
     context = {}
-    print "id=",id
-    context['wikiType'] = WikiType.objects.order_by('-id')
+    context['wikiType'] = WikiType.objects.order_by('id')
     if context['wikiType']:
         if not id:
             id = context['wikiType'][0].id
-        context['id'] = id
+        context['id'] = int(id)
         context['wiki'] = Wiki.objects.filter(category=id).order_by('-id')
     return render(request, 'wiki/wiki.html', context)
 
@@ -364,7 +363,7 @@ def wiki_add_type(request):
     ---------------------------------------
     时间:     2015－04－22
     ---------------------------------------
-    """   
+    """
     if request.method == 'POST':
         name = request.POST.get('name', '')
         id = int(request.POST.get('id', 0))
@@ -388,7 +387,7 @@ def wiki_add(request, id=None):
     ---------------------------------------
     时间:     2015－04－22
     ---------------------------------------
-    """  
+    """
     context = {}
     if id:
         context['typename'] = WikiType.objects.get(pk=id)
@@ -425,7 +424,7 @@ def ciphertext(request, id=None):
     ---------------------------------------
     时间:     2015－05－04
     ---------------------------------------
-    """ 
+    """
     if id and Blog.objects.filter(id=id).exists():
         blog = Blog.objects.get(pk=id)
         pwd = blog.is_show
@@ -494,7 +493,7 @@ def picView(request, id):
     ---------------------------------------
     时间:     2015－05－10
     -----
-    """    
+    """
     context = {}
     context['type'] = PicType.objects.get(pk=id)
     context['pics'] = MyPic.objects.filter(type=id).order_by('-id')
@@ -508,7 +507,7 @@ def pigeonhole(request):
     ---------------------------------------
     时间:     2015－05－12
     -----
-    """      
+    """
     blogs = Blog.objects.values('id', 'title', 'add_date').order_by('-add_date')
     counts = len(blogs)
     dates = set([str(i['add_date'].year)+str(i['add_date'].month) for i in blogs])

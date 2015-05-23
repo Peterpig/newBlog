@@ -21,7 +21,7 @@
                 </p>
                 <small>{% if obj.is_show %}密文:需要密码才能访问{% else %}{{ obj.summary|cut_title:'200' }}{% endif %}</small>
                 <p class="small_hr">
-                    作者：<a href="#" class="small">#需要修改</a>
+                    作者：<a href="#" class="small">{{ obj.author }}</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;热度：{{ obj.counts }}℃
                     {% if obj.getTags %}&nbsp;&nbsp;&nbsp;&nbsp;标签：{% for i in obj.getTags %}<a href="/blog/tag/{{ i.tag.id }}/" class="label label-danger">{{ i.tag.name }}</a> &nbsp;{% endfor %}{% endif %}
                     {% if user.is_active %}

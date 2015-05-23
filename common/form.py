@@ -20,13 +20,9 @@ class Register(forms.Form):
     ---------------------------------------
     时间:     2015－04－17
     ---------------------------------------
-    """  
+    """
     username = forms.CharField(label=u'账号', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'账号(5-12位)', 'required':''}
-        )
-    )
-    user_name = forms.CharField(label=u'用户名', widget=forms.TextInput(
-        attrs={'class': 'form-control', 'placeholder': u'用户名(5-12位)', 'required':''}
         )
     )
     password1 = forms.CharField(label=u'密码', widget=forms.PasswordInput(
@@ -41,34 +37,43 @@ class Register(forms.Form):
     def __init__(self, user=None, *args, **kwargs):
         self.user = user
         self.username = None
+        self.user_name = None
+        self.password1 = None
         super(Register, self).__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(Register, self).clean()
         username = cleaned_data.get("username")
-        user_name = cleaned_data.get("user_name")
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
+
+        if username:
+            if not 4 < len(username) < 13:
+                msg = u'账号要在5-12位之间'
+                raise forms.ValidationError(msg)
+            elif User.objects.filter(username=username).exists():
+                msg = u'账号已存在'
+                raise forms.ValidationError(msg)
 
         if password1 and password2:
             if password1 != password2:
                 msg = u'两次密码输入不相同'
-                self._errors['password2'] = self.error_class([msg])
+                raise forms.ValidationError(msg)
             elif not 4 < len(password1) < 13:
                 msg = u'密码要在5-12位之间'
-                self._errors['password1'] = self.error_class([msg])
+                raise forms.ValidationError(msg)
 
-        if user_name:
-            if not 4 < len(user_name) < 13:
-                msg = u'用户名要在5-12位之间'
-                self._errors['user_name'] = self.error_class([msg])
-
-        if username:
-            if not 4 < len(user_name) < 13:
-                msg = u'账号要在5-12位之间'
-                self._errors['username'] = self.error_class([msg])
-                
         return cleaned_data
+
+    def create(self):
+        """
+        创建用户
+        """
+        cleaned_data = super(Register, self).clean()
+        username = cleaned_data.get("username")
+        password1 = cleaned_data.get("password1")
+        User.objects.create_user(username=username, password=password1)
+
 
 class LoginForm(forms.Form):
     """
@@ -155,7 +160,7 @@ class BlogForm(ModelForm):
     ---------------------------------------
     时间:     2015－04－10
     ---------------------------------------
-    """    
+    """
     title = forms.CharField(max_length=100, label=u'标题', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'标题', 'required': ''}
         )
@@ -182,7 +187,7 @@ class PasswordForm(forms.Form):
     ---------------------------------------
     时间:     2015－04－17
     ---------------------------------------
-    """  
+    """
     oldpwd = forms.CharField(label=u'原始密码', widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': u'原始密码', 'required':''}
         )
@@ -215,7 +220,7 @@ class PasswordForm(forms.Form):
                 msg = u'密码要在5-12位之间'
                 self._errors['password1'] = self.error_class([msg])
         return cleaned_data
-        
+
 
 
 class WikiForm(ModelForm):
@@ -225,7 +230,7 @@ class WikiForm(ModelForm):
     ---------------------------------------
     时间:     2015－04－19
     ---------------------------------------
-    """  
+    """
     content = forms.CharField(label=u'wiki', widget=MarkDownInput(
         attrs={'class': 'form-control', 'placeholder': u'wiki', 'required': ''})
     )
@@ -242,7 +247,7 @@ class PicTypeForm(ModelForm):
     ---------------------------------------
     时间:     2015－04－19
     ---------------------------------------
-    """ 
+    """
     title = forms.CharField(max_length=100, label=u'title', widget=forms.TextInput(
         attrs = {'class': 'form-control', 'placeholder': u'title', 'required': ''})
     )
@@ -270,7 +275,7 @@ class MypicForm(ModelForm):
     ---------------------------------------
     时间:     2015－04－19
     ---------------------------------------
-    """     
+    """
     type = forms.ModelChoiceField(queryset=PicType.objects.order_by('-id'), widget=forms.RadioSelect)
 
     desc = forms.CharField(label=u'wiki', widget=forms.Textarea(
@@ -289,7 +294,7 @@ class BlogDetail(ModelForm):
     ---------------------------------------
     时间:     2015－05－19
     ---------------------------------------
-    """  
+    """
 
     blog_name = forms.CharField(max_length=50, label=u'博客名称', widget=forms.TextInput(
         attrs={'class': 'form-control', 'placeholder': u'博客名称', 'required': ''}

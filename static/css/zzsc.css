@@ -17,11 +17,11 @@ ul.form {
 	overflow:hidden;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;	
-	
+	border-radius: 5px;
+
 	-webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
 	-moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-	box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);	
+	box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form li a {
@@ -33,14 +33,13 @@ ul.form {
 	overflow:hidden;
 	position:relative;
 	text-decoration:none;
-	text-transform:uppercase;
 	font-size:14px;
 	color:#686868;
-	
+
 	-webkit-transition:all 0.2s linear;
 	-moz-transition:all 0.2s linear;
 	-o-transition:all 0.2s linear;
-	transition:all 0.2s linear;			
+	transition:all 0.2s linear;
 }
 
 .form li a:hover {
@@ -54,14 +53,14 @@ ul.form {
 .form li a.messages {
 		border-left:5px solid #fecf54;
 }
-	
+
 .form li a.settings {
 		border-left:5px solid #cf2130;
 }
 
 .form li a.logout {
 		border-left:5px solid #dde2d5;
-}	
+}
 
 .form li:first-child a:hover, .form li:first-child a {
 	-webkit-border-radius: 5px 5px 0 0;
@@ -86,7 +85,7 @@ ul.form {
 	padding: 3px 5px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
-	border-radius: 10px;		
+	border-radius: 10px;
 	font-style: normal;
 	color: #fff;
 	margin-top: 17px;

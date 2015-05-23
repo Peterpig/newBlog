@@ -17,9 +17,6 @@ class User(models.Model):
     def __unicode__(self):
         return self.user_name
 
-    class Meta:
-        db_table = 'auth_user'
-
 
 class Type(models.Model):
     """
@@ -45,6 +42,7 @@ class Blog(models.Model):
     文章
     """
     title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
     type = models.IntegerField(default=0)
     img = models.CharField(max_length=500, null=True)	# 博客引导图片
     summary = models.CharField(max_length=500, null=True)
@@ -131,7 +129,7 @@ class Pic(models.Model):
     ---------------------------------------
     时间:     2015－04－20
     ---------------------------------------
-    """    
+    """
     img = models.CharField(max_length=200)
     key = models.CharField(max_length=200)  # 七牛key
     add_time = models.DateTimeField(auto_now=True)
@@ -169,7 +167,7 @@ class MyPic(models.Model):
     ---------------------------------------
     时间:    2015－04－19
     ---------------------------------------
-    """    
+    """
     type = models.IntegerField()
     img = models.IntegerField(null=True)
     desc = models.CharField(max_length=500, null=True)
@@ -248,7 +246,7 @@ class Wiki(models.Model):
     ---------------------------------------
     时间:    2015－04－19
     ---------------------------------------
-    """    
+    """
     category = models.IntegerField()
     content = wmd_models.MarkDownField()
     content_show = wmd_models.MarkDownField(u'show', null=True)
@@ -260,6 +258,6 @@ class Wiki(models.Model):
     def save(self, force_insert=False, force_update=False, using=None):
         self.content_show = mark_safe(markdown.markdown(force_unicode(self.content), ['codehilite'], safe_mode='escape'))
         super(Wiki, self).save()
-        
+
     class Meta:
         db_table = 'wiki_type'

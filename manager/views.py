@@ -23,7 +23,7 @@ def manage(request):
     ---------------------------------------
     时间:     2015－04－10
     ---------------------------------------
-    """	
+    """
     context = {}
     user = request.user
 
@@ -37,7 +37,7 @@ def addBlog(request):
     ---------------------------------------
     时间:     2015－04－10
     ---------------------------------------
-    """ 
+    """
     context = {}
     now = datetime.datetime.now()
     user = request.user
@@ -68,7 +68,7 @@ def addBlog(request):
                 blog = Blog.objects.get(id=obj)
             else:
                 blog = Blog.objects.create(
-                    title=title, type=int(type), summary=summary, rss=rss, content=content, content_show=html, add_date=now, is_show=pwd
+                    title=title, type=int(type), author=user.username, summary=summary, rss=rss, content=content, content_show=html, add_date=now, is_show=pwd
                 )
             # 博客导图
             img = getPic(blog.content_show)
@@ -96,6 +96,7 @@ def addBlog(request):
         context['form'] = form
         return render(request, 'manager/addtheme.html', context)
     else:
+        # GET请求
         id = request.GET.get('id', None)
         context['form'] = BlogForm()
         is_edit = 0
@@ -119,7 +120,7 @@ def addType(request):
     ---------------------------------------
     时间:    2015－04－20
     ---------------------------------------
-    """ 
+    """
     user = request.user
     if request.method == 'POST':
         name = request.POST.get('name').strip().lower()
@@ -137,7 +138,7 @@ def getPic(html):
     ---------------------------------------
     """
     # 获取文章中的图片，如果有：抓取图片url 。否则使用本地图片
-    try:        
+    try:
         soup = BeautifulSoup(html)
         s = soup.find('img')
     except Exception, e:
@@ -154,7 +155,7 @@ def delBlog(request):
     ---------------------------------------
     时间:    2015－04－27
     ---------------------------------------
-    """    
+    """
     if request.method == 'POST':
         id = request.POST.get('id')
         BlogTag.objects.filter(blog__id=id).delete()
@@ -263,7 +264,7 @@ def uploadBlog(request):
     ---------------------------------------
     时间:    2015－05－10
     ---------------------------------------
-    """    
+    """
     context = {}
     now = datetime.datetime.now()
     if request.method == 'POST':
@@ -302,7 +303,7 @@ def uploadBlog(request):
 
             # 创建ThemeTag
             for i in tag_list:
-                BlogTag.objects.create(blog=blog, tag=i)        
+                BlogTag.objects.create(blog=blog, tag=i)
         return HttpResponse('/')
     context['types'] = Type.objects.order_by('-id')
     context['tags'] = Tag.objects.order_by('-id')
@@ -317,7 +318,7 @@ def changePwd(request):
     时间:    2015－05－18
     ---------------------------------------
     """
-    context = {}        
+    context = {}
     user = request.user
     context['form'] = PasswordForm()
     if request.method == 'POST':
@@ -339,7 +340,7 @@ def blog_detail(request):
     ---------------------------------------
     时间:     2015－04－17
     ---------------------------------------
-    """  
+    """
     context = {}
     user = request.user
     #context['form'] = BlogDetail()
@@ -361,10 +362,10 @@ def blog_detail(request):
                                                    blog_url=blog_url,
                                                    blog_tongji=blog_tongji)
     else:
-        
+
         try:
             detail = BlogDetal.objects.get(pk=1)
-            row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}            
+            row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}
         except Exception, e:
             row = {}
 

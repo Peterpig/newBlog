@@ -42,7 +42,10 @@ def tranArrowDate(value):
 
 def get_blog_detail(value):
     dic = {}
-    detal = BlogDetal.objects.get(pk=1) or ''
+    try:
+        detal = BlogDetal.objects.get(pk=1) or ''
+    except Exception, e:
+        detal = ''
 
     if detal:
         dic['name'] = detal.blog_name
@@ -58,6 +61,7 @@ def get_blog_detail(value):
         dic['description'] = '享受编程的乐趣'
         dic['keywords'] = 'Anybfans,anybfans'
         dic['url'] = 'www.anybfans.com'
+        dic['tongji'] = ''
 
     return dic[value]
 

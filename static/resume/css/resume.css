@@ -35,9 +35,7 @@ p {
 
 /* Links */
 a {
-    color: #f85c37;
     word-wrap: break-word;
-
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
     -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
     -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -151,7 +149,6 @@ a:after {
 
 /* Header Wrap */
 #headerwrap {
-	background: url(/site_media/resume/images/resume.jpg) no-repeat center top;
 	padding-top:140px;
 	text-align:center;
 	background-attachment: relative;
@@ -170,7 +167,7 @@ a:after {
 
 #headerwrap h1 {
 	font-size: 80px;
-	color: white;
+	color: blue;
 }
 
 #headerwrap h3 {

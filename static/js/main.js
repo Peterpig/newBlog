@@ -74,7 +74,7 @@ function addTheme(){
         var title = $.trim($('#id_title').val());
         var pwd = $.trim($('#id_is_show').val());
         if(!title){
-            return alert('填写标题了');
+            return alert('请填写标题');
         }
 
         setBtn('off',$('#submit'),'发布笔记');     //禁用按钮
