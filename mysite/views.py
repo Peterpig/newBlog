@@ -113,6 +113,23 @@ def search(request):
     return render(request, 'search.html', context)
 
 
+def search_author(request):
+    """
+    ---------------------------------------
+    功能说明：首页点击作者，按作者检索
+    ---------------------------------------
+    时间:     2015－05－24
+    ---------------------------------------
+    """
+    context = {}
+    key = request.GET.get('author', '')
+    context['key'] = key
+    if key:
+        context['blogs'] = Blog.objects.filter(author=key).order_by('-id')     # 标题检索
+
+    return render(request, 'search.html', context)
+
+
 def sidebar(request):
     """
     ---------------------------------------

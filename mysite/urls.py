@@ -30,6 +30,7 @@ urlpatterns += patterns('mysite.views',
     url(r'^register/$', 'register', name='register'),                        # 登出
     url(r'^blog/(?P<id>\d+)/$', 'blog', name='blog'),                        # 正文
     url(r'^blog/search/$', 'search', name='search'),                    # 检索
+    url(r'^blog/search_author/$', 'search_author', name='search'),                    # 检索
     url(r'^blog/common/$', 'sidebar', name='sidebar'),                  # 侧栏异步加载
     url(r'^blog/type/(?P<id>\d+)/$', 'blogType', name='blogType'),      # 博客类型检索
     url(r'^blog/tag/(?P<id>\d+)/$', 'blogTag', name='blogTag'),         # 博客标签检索
