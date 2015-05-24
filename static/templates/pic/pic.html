@@ -17,7 +17,7 @@
     {% autopaginate pics 30 %}
     {% for obj in pics %}
         {% if forloop.counter == 1 %}
-            <img class="lazy img-responsive" src="/site-media/lazyload/img/grey.gif" data-original="{{ obj.getPic.img }}" alt=""><br/>
+            <img class="lazy img-responsive" src="/site_media/lazyload/img/grey.gif" data-original="{{ obj.getPic.img }}" alt=""><br/>
 
         {% else %}
             <img class="lazy img-responsive" data-original="{{ obj.getPic.img }}" width="800" height="574" alt=""><br/>
@@ -43,7 +43,7 @@
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
-var duoshuoQuery = {short_name:"beginman"};
+var duoshuoQuery = {short_name:"Anybfans"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;

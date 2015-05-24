@@ -286,8 +286,8 @@ def get_blog_detals():
     else:
         # 默认值
         dic['name'] = 'Anybfans'
-        dic['title'] = 'Anybfans博客'
-        dic['description'] = '享受编程的乐趣'
+        dic['title'] = u'Anybfans博客'
+        dic['description'] = u'享受编程的乐趣'
         dic['keywords'] = 'Anybfans,anybfans'
         dic['url'] = 'www.anybfans.com'
         dic['tongji'] = ''

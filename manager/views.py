@@ -248,7 +248,7 @@ def UploadMyPic(request, id):
         data = request.POST.get('data')
         data = json.loads(data)
         for obj in data:
-            MyPic.objects.creat(type=id, img=obj['pid'], desc=obj['desc'])
+            MyPic.objects.create(type=id, img=obj['pid'], desc=obj['desc'])
         return HttpResponse('ok')
     else:
         pictype = get_object_or_404(PicType, pk=id)
@@ -343,31 +343,40 @@ def blog_detail(request):
     """
     context = {}
     user = request.user
-    #context['form'] = BlogDetail()
-    print user.id
+    context['form'] = BlogDetail()
     if request.method == 'POST':
         form = BlogDetail(user, request.POST)
-        if form.is_valid():
-            blog_name = request.POST.get('blog_name')
-            blog_title = request.POST.get('blog_title')
-            blog_description = request.POST.get('blog_description')
-            blog_keywords = request.POST.get('blog_keywords')
-            blog_url = request.POST.get('blog_url')
-            blog_tongji = request.POST.get('blog_tongji')
+        blog_name = request.POST.get('blog_name')   or 'Anybfans'
+        blog_title = request.POST.get('blog_title') or u'Anybfans博客'
+        blog_description = request.POST.get('blog_description') or u'享受编程的乐趣'
+        blog_keywords = request.POST.get('blog_keywords')   or 'Anybfans,anybfans'
+        blog_url = request.POST.get('blog_url') or 'www.anybfans.com'
+        blog_tongji = request.POST.get('blog_tongji')   or '123'
 
+        if BlogDetal.objects.filter(pk=1).exists():
+            # 存在编辑
             BlogDetal.objects.filter(pk=1).update(blog_name=blog_name,
                                                    blog_title=blog_title,
                                                    blog_description=blog_description,
                                                    blog_keywords=blog_keywords,
                                                    blog_url=blog_url,
                                                    blog_tongji=blog_tongji)
+        else:
+            # 不存在创建
+            BlogDetal.objects.filter(pk=1).create(blog_name=blog_name,
+                                                   blog_title=blog_title,
+                                                   blog_description=blog_description,
+                                                   blog_keywords=blog_keywords,
+                                                   blog_url=blog_url,
+                                                   blog_tongji=blog_tongji)
+        return HttpResponseRedirect('/')
     else:
-
+        # GET方式 传递默认值
         try:
             detail = BlogDetal.objects.get(pk=1)
             row = {"blog_name":detail.blog_name, "blog_title":detail.blog_title, "blog_description":detail.blog_description, "blog_keywords":detail.blog_keywords, "blog_url":detail.blog_url, "blog_tongji":detail.blog_tongji}
         except Exception, e:
-            row = {}
+            row = {"blog_name":"Anybfans", "blog_title":"Anybfans博客", "blog_description":"享受编程的乐趣", "blog_keywords":"Anybfans,anybfans", "blog_url":"www.anybfans.com", "blog_tongji":""}
 
         context['form'] = BlogDetail(row)
     return render(request, 'manager/blog_detail.html', context)
