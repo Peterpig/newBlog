@@ -17,8 +17,8 @@
           {% if user.is_authenticated %}
            <li><a href="#">Hi,{{user|capfirst}}</a></li>
           <li id="manage"><a href="/manage/add/">Add+</a></li>
-          <li id="manage"><a href="/manage/upload/">Upload+</a></li>
-          {% if user.username == "admin" %} 
+          <li id="manage"><a href="/manage/user/pwd/">Changepwd</a></li>
+          {% if user.username == "admin" %}
           <li id="manage"><a href="/manage/blog_detail/">BlogDetail</a></li>
           {% endif %}
           <li><a href="/logout/">logout</a></li>
@@ -26,7 +26,6 @@
           <li><a href="/register/">注册</a></li>
           <li><a href="/login/">登录</a></li>
           {% endif %}
-          <li><a href="/feed/"><img src="/site_media/img/rss.png" alt="" width="25" height="25"/></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -39,12 +39,18 @@ DATABASES = {
     }
 }
 
-# 七牛云存储
-QINIU_ACCESS_KEY = 'sCjnbX8QE8sD5IedpjockW34MnI8bst6-fIktjWu'
-QINIU_SECRET_KEY = 'X-pj6uSMHb-WBrW1PD8q_nRXYMBbZn_8cDGiaYaK'
-QINIU_BUCKET_NAME = 'anybfans'
-QINIU_DOMAIN = 'anybfans.qiniudn.com'  # 域名
+# # 七牛云存储
+# QINIU_ACCESS_KEY = 'sCjnbX8QE8sD5IedpjockW34MnI8bst6-fIktjWu'
+# QINIU_SECRET_KEY = 'X-pj6uSMHb-WBrW1PD8q_nRXYMBbZn_8cDGiaYaK'
+# QINIU_BUCKET_NAME = 'anybfans'
+# QINIU_DOMAIN = 'anybfans.qiniudn.com'  # 域名
 
+
+# 七牛云存储
+QINIU_ACCESS_KEY = '21pibli_T_AB3_8AOuSkQuG5A3cflGrjzWxSb4WR'
+QINIU_SECRET_KEY = '7ppmRnK1NFAWRA4Oa5ubaUYR-hUhikeJ3yzCI6jF'
+QINIU_BUCKET_NAME = 'pythonblog'
+QINIU_DOMAIN = '7xja1u.com1.z0.glb.clouddn.com'  # 域名
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
