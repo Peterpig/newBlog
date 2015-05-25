@@ -142,6 +142,7 @@ def sidebar(request):
         context = {}
         context['types'] = Type.objects.order_by('-id')          # 获取分类  id倒序
         context['tag'] = tagsCloud()                            # 标签云
+        context['hot'] = Blog.objects.order_by('-counts')[:10]  # 热门文章 前10篇
         return render(request, 'common/sidebar.html', context)
 
 
