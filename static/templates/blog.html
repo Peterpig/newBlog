@@ -20,8 +20,15 @@
               类别：<a href="/blog/type/{{ blog.type}}/" class="label label-warning small">{{ blog.getType.name }}</a>
               {% if blog.getTags %}&nbsp;&nbsp;标签：{% for i in blog.getTags %}<a href="/blog/tag/{{ i.tag.id }}/" class="label label-danger small">{{ i.tag.name }}</a> {% endfor %}{% endif %}
               {% if user.is_active %}
-                &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" class="text-info" onclick="delBlog({{ blog.id }})">删除</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;<a href="/manage/add/?id={{ blog.id }}" class="text-danger" id="edit_">编辑</a>
+                {% if user.username == obj.author and user.username != "admin" %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" class="text-info" onclick="delBlog({{ obj.id }})">删除</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/manage/add/?id={{ obj.id }}" class="text-danger" id="edit_">编辑</a>
+              {% else %}
+                 {% if user.username == "admin" %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" class="text-info" onclick="delBlog({{ obj.id }})">删除</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="/manage/add/?id={{ obj.id }}" class="text-danger" id="edit_">编辑</a>
+                {% endif %}
+              {% endif %}
               {% endif %}
             </p>
             <hr/>
