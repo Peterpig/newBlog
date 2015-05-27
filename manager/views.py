@@ -324,7 +324,8 @@ def changePwd(request):
     if request.method == 'POST':
         form = PasswordForm(user, request.POST)
         if form.is_valid():
-            newpwd = form.cleaned_data.get('passsword1', None)
+            formData = form.cleaned_data
+            newpwd = formData.get('password1', None)
             if newpwd:
                 user.set_password(newpwd)
                 user.save()
