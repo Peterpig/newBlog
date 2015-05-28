@@ -6,7 +6,6 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -15,7 +14,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from common.form import LoginForm, WikiForm, Register
 
 from mysite.models import *
-#from common.superqiniu import SuperQiniu
+from common.superqiniu import SuperQiniu
 
 
 def home(request):
